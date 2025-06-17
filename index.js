@@ -1,4 +1,3 @@
-//, GatewayIntentBits.EMBED_LINKS, GatewayIntentBits.VIEW_CHANNEL
 const { Client, GatewayIntentBits, messageLink, Partials } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
