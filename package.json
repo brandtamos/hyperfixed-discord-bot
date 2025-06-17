@@ -1,0 +1,17 @@
+{
+  "name": "hyperfixedbot",
+  "version": "1.0.0",
+  "description": "hyperfixing the world",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.5",
+    "node-persist": "^4.0.4"
+  }
+}
