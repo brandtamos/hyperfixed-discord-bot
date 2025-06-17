@@ -38,7 +38,7 @@ start();
 //listen for messages
 client.on("messageCreate", async msg => {
     
-    //igmore messages from bots, including self
+    //ignore messages from bots, including self
     if (msg.author.bot) return;
 
     const command = msg.content.split(" ")[0].toLowerCase();
@@ -75,7 +75,7 @@ function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n';
 
-    //poplulate the rest of the help list from stored commands
+    //populate the rest of the help list from stored commands
     commandList.forEach((command) => {
         let newHelpLine = "`" + command.command + "` - " + command.description + "\n";
         response = response + newHelpLine;
