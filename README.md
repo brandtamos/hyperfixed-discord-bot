@@ -11,6 +11,26 @@
 ## Running the bot
 - use `node index.js` to run the bot
 
+## Contributing
+To contribute a change, submit a pull request against the main branch.
+
+The recommended workflow is as follows.
+
+First, ensure you have the latest changes on main:
+
+`git checkout main`
+
+`git pull`
+
+Then, create your feature branch:
+
+`git checkout -b your-new-feature-branch-name`
+
+Once your changes are ready, push the branch to to repo:
+
+`git push origin your-new-feature-branch-name`
+
+Finally, create a pull request against the main branch in github.
 
 ## FAQ
 
