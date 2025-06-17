@@ -24,7 +24,6 @@ const emojiToRoleMap = new Map([
 
 //init storage
 let commandList = [];
-let correctionList = [];
 
 const start = async function(){
     await storage.init({dir: 'storage'});
@@ -33,12 +32,6 @@ const start = async function(){
     let storedCommands = await storage.getItem("storedCommands");
     if (typeof storedCommands != 'undefined'){
         commandList = storedCommands;
-    }
-
-    //load correction list into memory
-    let storedCorrections = await storage.getItem("storedCorrections");
-    if (typeof storedCorrections != 'undefined'){
-        correctionList = storedCorrections;
     }
 }
 start();
