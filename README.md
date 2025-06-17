@@ -1,6 +1,6 @@
 # Hyperfixed Discord Bot
 
-# Requirements
+## Requirements
 - node.js
 - npm
 
