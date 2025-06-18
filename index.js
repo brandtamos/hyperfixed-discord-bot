@@ -91,32 +91,45 @@ function postHelp(msg){
     msg.channel.send(response);
 }
 
-async function bullyHasHappened(msg, command){
-    let lastBullyTime = await storage.getItem("lastBullyTime");
-    let currentTimestamp = new Date().getTime();
-    let diffTime = currentTimestamp - lastBullyTime;
-    let dayDiff = Math.floor((diffTime) / (1000 * 3600 * 24));
-    let hours = Math.floor((diffTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    let minutes = Math.floor((diffTime % (60 * 60 * 1000)) / (60 * 1000));
-    let seconds = Math.floor((diffTime % (60 * 1000)) / 1000);
+async function getTimeSinceLastBully() {
+    const lastBullyTime = await storage.getItem("lastBullyTime");
+    const currentTimestamp = new Date().getTime();
+    await storage.setItem("lastBullyTime", currentTimestamp);
 
-    let bullyCount = await storage.getItem("bullyCount");
-    let newBullyCount = bullyCount + 1;
+    return currentTimestamp - lastBullyTime;
+}
+
+async function incrementAndGetBullyCount() {
+    const bullyCount = await storage.getItem("bullyCount");
+    const newBullyCount = bullyCount + 1;
     await storage.setItem("bullyCount", newBullyCount);
 
-    let bullyRecord = await storage.getItem("bullyRecord");
-    let currentBullyRecord = bullyRecord;
+    return newBullyCount;
+}
+
+async function getAndSetBullyRecord(diffTime) {
+    const bullyRecord = await storage.getItem("bullyRecord");
     if(bullyRecord < diffTime){
-        currentBullyRecord = diffTime;
-        await storage.setItem("bullyRecord", currentBullyRecord);
+        await storage.setItem("bullyRecord", diffTime);
+        return diffTime;
     }
+    return bullyRecord;
+}
 
-    let recordDays = Math.floor((currentBullyRecord) / (1000 * 3600 * 24));
-    let recordHours = Math.floor((currentBullyRecord % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-    let recordMinutes = Math.floor((currentBullyRecord % (60 * 60 * 1000)) / (60 * 1000));
-    let recordSeconds = Math.floor((currentBullyRecord % (60 * 1000)) / 1000);
+async function bullyHasHappened(msg, command){
+    const diffTime = await getTimeSinceLastBully();
+    const newBullyCount = await incrementAndGetBullyCount();
+    const currentBullyRecord = getAndSetBullyRecord(diffTime);
 
-    await storage.setItem("lastBullyTime", currentTimestamp);
+    const dayDiff = Math.floor((diffTime) / (1000 * 3600 * 24));
+    const hours = Math.floor((diffTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+    const minutes = Math.floor((diffTime % (60 * 60 * 1000)) / (60 * 1000));
+    const seconds = Math.floor((diffTime % (60 * 1000)) / 1000);
+
+    const recordDays = Math.floor((currentBullyRecord) / (1000 * 3600 * 24));
+    const recordHours = Math.floor((currentBullyRecord % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+    const recordMinutes = Math.floor((currentBullyRecord % (60 * 60 * 1000)) / (60 * 1000));
+    const recordSeconds = Math.floor((currentBullyRecord % (60 * 1000)) / 1000);
 
     const ch = command.charAt(1);
     const bullyMsg = `${ch}enevolent moderator **${ch}randtamos** has ${ch}een ${ch}ullied.\n\nIt has ${ch}een **${dayDiff} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds** since **${ch}randtamos** was last ${ch}ullied.\n\n**${ch}randtamos** has ${ch}een ${ch}ullied a total of **${newBullyCount} times**.\n\nThe record for the longest amount of time **${ch}randtamos** has not ${ch}een ${ch}ullied is **${recordDays} days, ${recordHours} hours, ${recordMinutes} minutes and ${recordSeconds} seconds**.`
