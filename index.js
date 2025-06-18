@@ -131,8 +131,8 @@ async function bullyHasHappened(msg, command){
     const recordMinutes = Math.floor((currentBullyRecord % (60 * 60 * 1000)) / (60 * 1000));
     const recordSeconds = Math.floor((currentBullyRecord % (60 * 1000)) / 1000);
 
-    const ch = command.charAt(1);
-    const bullyMsg = `${ch}enevolent moderator **${ch}randtamos** has ${ch}een ${ch}ullied.\n\nIt has ${ch}een **${dayDiff} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds** since **${ch}randtamos** was last ${ch}ullied.\n\n**${ch}randtamos** has ${ch}een ${ch}ullied a total of **${newBullyCount} times**.\n\nThe record for the longest amount of time **${ch}randtamos** has not ${ch}een ${ch}ullied is **${recordDays} days, ${recordHours} hours, ${recordMinutes} minutes and ${recordSeconds} seconds**.`
+    const ch = command.charAt(1).toLowerCase();
+    const bullyMsg = `${ch.toUpperCase()}enevolent moderator **${ch}randtamos** has ${ch}een ${ch}ullied.\n\nIt has ${ch}een **${dayDiff} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds** since **${ch}randtamos** was last ${ch}ullied.\n\n**${ch}randtamos** has ${ch}een ${ch}ullied a total of **${newBullyCount} times**.\n\nThe record for the longest amount of time **${ch}randtamos** has not ${ch}een ${ch}ullied is **${recordDays} days, ${recordHours} hours, ${recordMinutes} minutes and ${recordSeconds} seconds**.`
     msg.channel.send(bullyMsg);
 }
 
