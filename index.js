@@ -11,6 +11,9 @@ const storage = require('node-persist');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
+
+const bullyRegex = /^!\wully$/
+
 let trackedPronounMessage = null;
 
 const emojiToRoleMap = new Map([
@@ -35,6 +38,10 @@ const start = async function(){
 }
 start();
 
+function isBullyCommand(command) {
+    return command.match(bullyRegex);
+}
+
 //listen for messages
 client.on("messageCreate", async msg => {
     
@@ -45,13 +52,15 @@ client.on("messageCreate", async msg => {
 
     checkForCommand(msg, command);
 
+    if(isBullyCommand(command)){
+        // switch doesn't deal well with wildcard matching so first check for a *ully command
+        await bullyHasHappened(msg, command);
+        return;
+    }
+
     switch(command){
         case "!help":
             postHelp(msg);
-            break;
-        case "!bully":
-        case "!vully":
-            await bullyHasHappened(msg, command);
             break;
         case "!addcommand":
             if(userIsMod(msg)) await addCommand(msg);
@@ -61,7 +70,6 @@ client.on("messageCreate", async msg => {
             break;
         default:
             break;
-
     }
 
     //the weezer joke
@@ -110,12 +118,9 @@ async function bullyHasHappened(msg, command){
 
     await storage.setItem("lastBullyTime", currentTimestamp);
 
-    if(command == "!vully"){
-        msg.channel.send('Venevolent moderator **vrandtamos** has veen vullied.\n\nIt has veen **' + dayDiff + ' days, ' + hours +' hours, ' + minutes + ' minutes and ' + seconds +' seconds** since **vrandtamos** was last vullied.\n\n**vrandtamos** has veen vullied a total of **' + newBullyCount + ' times**.\n\nThe record for the longest amount of time **vrandtamos** has not veen vullied is **' + recordDays  +' days, '  +recordHours + ' hours, ' + recordMinutes + ' minutes and ' + recordSeconds +' seconds**.');
-    }
-    else{
-        msg.channel.send('Benevolent moderator **brandtamos** has been bullied.\n\nIt has been **' + dayDiff + ' days, ' + hours +' hours, ' + minutes + ' minutes and ' + seconds +' seconds** since **brandtamos** was last bullied.\n\n**brandtamos** has been bullied a total of **' + newBullyCount + ' times**.\n\nThe record for the longest amount of time **brandtamos** has not been bullied is **' + recordDays  +' days, '  +recordHours + ' hours, ' + recordMinutes + ' minutes and ' + recordSeconds +' seconds**.');
-    }
+    const ch = command.charAt(1);
+    const bullyMsg = `${ch}enevolent moderator **${ch}randtamos** has ${ch}een ${ch}ullied.\n\nIt has ${ch}een **${dayDiff} days, ${hours} hours, ${minutes} minutes and ${seconds} seconds** since **${ch}randtamos** was last ${ch}ullied.\n\n**${ch}randtamos** has ${ch}een ${ch}ullied a total of **${newBullyCount} times**.\n\nThe record for the longest amount of time **${ch}randtamos** has not ${ch}een ${ch}ullied is **${recordDays} days, ${recordHours} hours, ${recordMinutes} minutes and ${recordSeconds} seconds**.`
+    msg.channel.send(bullyMsg);
 }
 
 async function addCommand(msg){
