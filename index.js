@@ -109,7 +109,7 @@ async function incrementAndGetBullyCount() {
 
 async function getAndSetBullyRecord(diffTime) {
     const bullyRecord = await storage.getItem("bullyRecord");
-    if(bullyRecord < diffTime){
+    if(bullyRecord < diffTime || isNaN(bullyRecord)){
         await storage.setItem("bullyRecord", diffTime);
         return diffTime;
     }
