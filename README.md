@@ -26,7 +26,7 @@ Then, create your feature branch:
 
 `git checkout -b your-new-feature-branch-name`
 
-Once your changes are ready, push the branch to to repo:
+Once your changes are ready, push the branch to repo:
 
 `git push origin your-new-feature-branch-name`
 
