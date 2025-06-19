@@ -119,7 +119,7 @@ async function getAndSetBullyRecord(diffTime) {
 async function bullyHasHappened(msg, command){
     const diffTime = await getTimeSinceLastBully();
     const newBullyCount = await incrementAndGetBullyCount();
-    const currentBullyRecord = getAndSetBullyRecord(diffTime);
+    const currentBullyRecord = await getAndSetBullyRecord(diffTime);
 
     const dayDiff = Math.floor((diffTime) / (1000 * 3600 * 24));
     const hours = Math.floor((diffTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
