@@ -82,9 +82,6 @@ npm start | tee bot.log
 - **Background process**: Find process ID and kill it
 - **PM2**: `pm2 stop discord-bot`
 
-## No Additional CLI Commands
-
-The bot doesn't provide additional command-line interface commands. All functionality is accessed through Discord chat commands like `!help`, `!addcommand`, etc.
 
 ## Deployment Scripts
 
