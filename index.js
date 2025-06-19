@@ -44,7 +44,7 @@ function isBullyCommand(command) {
 
 //listen for messages
 client.on("messageCreate", async msg => {
-    
+
     //ignore messages from bots, including self
     if (msg.author.bot) return;
 
@@ -92,15 +92,27 @@ function postHelp(msg){
 }
 
 async function getTimeSinceLastBully() {
-    const lastBullyTime = await storage.getItem("lastBullyTime");
+    let lastBullyTime = await storage.getItem("lastBullyTime");
     const currentTimestamp = new Date().getTime();
+
+    // Handle NaN bullys (e.g., first run).
+    if (isNaN(lastBullyTime)) {
+        lastBullyTime = currentTimestamp;
+    }
+
     await storage.setItem("lastBullyTime", currentTimestamp);
 
     return currentTimestamp - lastBullyTime;
 }
 
 async function incrementAndGetBullyCount() {
-    const bullyCount = await storage.getItem("bullyCount");
+    let bullyCount = await storage.getItem("bullyCount");
+
+    // Handle NaN bullys (e.g., first run).
+    if (isNaN(bullyCount)) {
+        bullyCount = 0;
+    }
+
     const newBullyCount = bullyCount + 1;
     await storage.setItem("bullyCount", newBullyCount);
 
@@ -108,8 +120,14 @@ async function incrementAndGetBullyCount() {
 }
 
 async function getAndSetBullyRecord(diffTime) {
-    const bullyRecord = await storage.getItem("bullyRecord");
-    if(bullyRecord < diffTime || isNaN(bullyRecord)){
+    let bullyRecord = await storage.getItem("bullyRecord");
+
+    // Handle NaN bullys (e.g., first run).
+    if (isNaN(bullyRecord)) {
+        bullyRecord = 0;
+    }
+
+    if (diffTime > bullyRecord) {
         await storage.setItem("bullyRecord", diffTime);
         return diffTime;
     }
@@ -119,7 +137,7 @@ async function getAndSetBullyRecord(diffTime) {
 async function bullyHasHappened(msg, command){
     const diffTime = await getTimeSinceLastBully();
     const newBullyCount = await incrementAndGetBullyCount();
-    const currentBullyRecord = getAndSetBullyRecord(diffTime);
+    const currentBullyRecord = await getAndSetBullyRecord(diffTime);
 
     const dayDiff = Math.floor((diffTime) / (1000 * 3600 * 24));
     const hours = Math.floor((diffTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
@@ -151,7 +169,7 @@ async function addCommand(msg){
         //trim off commands to get just the text we need
         splitMessage.shift();
         splitMessage.shift();
-        
+
 
         let rejoinedText = splitMessage.join(" ");
         let commandDescription = rejoinedText.split("|")[0];
@@ -218,13 +236,13 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
     if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
         console.log(`${user.tag} added ${reaction.emoji.name}`);
-        
+
         if(emojiToRoleMap.has(reaction.emoji.name)){
             let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
             const guild = reaction.message.guild;
             const member = await guild.members.fetch(user.id);
-        
+
             await member.roles.add(roleId).catch(console.error);
         }
     }
@@ -242,7 +260,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
 
     if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
         console.log(`${user.tag} removed ${reaction.emoji.name}`);
-        
+
         if(emojiToRoleMap.has(reaction.emoji.name)){
             let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
