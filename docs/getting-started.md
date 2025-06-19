@@ -1,4 +1,3 @@
-````markdown
 # Getting Started
 
 ## Installation
@@ -54,4 +53,3 @@ After starting the bot, test these commands in your Discord server:
 ### Getting More Help
 - See [FAQ](faq.md) for additional troubleshooting
 - Check [Discord Setup Guide](discord-setup.md) for configuration help
-````
