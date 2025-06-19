@@ -23,4 +23,3 @@ The bot listens to Discord events, parses commands, handles reactions, interacts
 - **Custom Commands**: Stores and executes user-created commands
 - **Storage Layer**: Persists data using node-persist
 - **Easter Eggs**: Includes Weezer detection functionality (what's with these homies, dissing my bot?)
-```
