@@ -171,18 +171,28 @@ Set the following environment variables in your `.env` file:
 ├── index.js                  # Main bot logic and event handlers
 ├── package.json              # Project metadata and scripts
 ├── .env_example              # Environment variable template
+├── .gitignore                # Ignore configuration
+├── CODEOWNERS                # Repo ownership
+├── README.md                 # Project overview and usage
 ├── storage/                  # Persistent data (auto-created)
 │   ├── storedCommands        # Custom commands
 │   ├── lastBullyTime         # Bully tracking timestamp
 │   ├── bullyCount            # Total bully events
 │   └── bullyRecord           # Longest streak record
 └── docs/                     # Comprehensive documentation
-    ├── getting-started.md    # Setup instructions
-    ├── discord-setup.md      # Discord configuration
-    ├── examples.md           # Usage examples
-    ├── api.md                # API reference
-    ├── faq.md                # Troubleshooting
-    └── deployment.md         # Hosting guide
+    ├── api.md                # Library/API reference
+    ├── architecture.md       # System design overview
+    ├── changelog.md          # Version history
+    ├── cli.md                # Command-line usage
+    ├── configuration.md      # Environment variables & settings
+    ├── deployment.md         # Production hosting options
+    ├── discord-setup.md      # Discord bot setup guide
+    ├── examples.md           # Usage examples & workflows
+    ├── faq.md                # Troubleshooting & common questions
+    ├── getting-started.md    # Installation & first run
+    ├── mkdocs.yml            # MkDocs site configuration
+    └── roles.md              # Pronoun roles & built-ins
+
 ```
 
 ---
