@@ -1,4 +1,3 @@
-````markdown
 # Hyperfixed Discord Bot
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/brandtamos/hyperfixed-discord-bot/ci.yml)](https://github.com/brandtamos/hyperfixed-discord-bot/actions)
@@ -46,7 +45,7 @@ cp .env_example .env
 
 # Start the bot
 npm start
-```
+
 
 ## Discord Setup
 Before running the bot, you need to:
@@ -79,7 +78,7 @@ Before running the bot, you need to:
 
 # Remove a command
 !removecommand welcome
-```
+
 
 ### Bully Tracking
 ```bash
