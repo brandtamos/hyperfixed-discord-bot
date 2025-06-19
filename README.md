@@ -22,28 +22,28 @@ Hyperfixed Discord Bot provides a flexible framework for adding custom commands,
 ## Installation
 
 # Clone the repo
-git clone https://github.com/brandtamos/hyperfixed-discord-bot.git
-cd hyperfixed-discord-bot
+`git clone https://github.com/brandtamos/hyperfixed-discord-bot.git`
+cd hyperfixed-discord-bot```
 
 # Install dependencies
 npm install
 
 # Create and populate .env
-cp .env_example .env
+`cp .env_example .env`
 # Edit .env with your Discord bot values (see docs/discord-setup.md)
 
 
 ## Quick Start
 
 # Install dependencies
-npm install
+`npm install`
 
 # Configure your bot (see docs/discord-setup.md for detailed instructions)
-cp .env_example .env
+`cp .env_example .env`
 # Edit .env with your Discord bot token and channel IDs
 
 # Start the bot
-npm start
+`npm start`
 
 
 ## Discord Setup
@@ -69,25 +69,25 @@ Before running the bot, you need to:
 ### Custom Commands
 
 # Create a custom command (MOD role required)
-!addcommand welcome New member greeting | Welcome to our awesome server! 🎉
+`!addcommand welcome New member greeting | Welcome to our awesome server! 🎉`
 
 # Use the command
-!welcome
-# Output: Welcome to our awesome server! 🎉
+`!welcome`
+# Output
+Welcome to our awesome server! 🎉
 
 # Remove a command
-!removecommand welcome
+`!removecommand welcome`
 
 
-### Bully Tracking
-
-# Standard bully tracking
-!bully
+### Bullying
+# Standard bullying
+`!bully`
 # Output: Detailed statistics with time tracking and records
 
 # Creative variants
-!wully  # Replaces 'b' with 'w' in output
-!cully  # Replaces 'b' with 'c' in output
+`!wully  # Replaces 'b' with 'w' in output`
+`!cully  # Replaces 'b' with 'c' in output`
 
 
 For more examples, see [docs/examples.md](docs/examples.md).
