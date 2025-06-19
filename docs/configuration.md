@@ -1,4 +1,3 @@
-````markdown
 # Configuration Reference
 
 ## Environment Variables
