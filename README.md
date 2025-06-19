@@ -20,7 +20,7 @@ Hyperfixed Discord Bot provides a flexible framework for adding custom commands,
 - [License & Authors](#license--authors)
 
 ## Installation
-```bash
+
 # Clone the repo
 git clone https://github.com/brandtamos/hyperfixed-discord-bot.git
 cd hyperfixed-discord-bot
@@ -31,11 +31,10 @@ npm install
 # Create and populate .env
 cp .env_example .env
 # Edit .env with your Discord bot values (see docs/discord-setup.md)
-````
+
 
 ## Quick Start
 
-```bash
 # Install dependencies
 npm install
 
@@ -68,7 +67,7 @@ Before running the bot, you need to:
 ## Examples
 
 ### Custom Commands
-```bash
+
 # Create a custom command (MOD role required)
 !addcommand welcome New member greeting | Welcome to our awesome server! 🎉
 
@@ -81,7 +80,7 @@ Before running the bot, you need to:
 
 
 ### Bully Tracking
-```bash
+
 # Standard bully tracking
 !bully
 # Output: Detailed statistics with time tracking and records
@@ -89,7 +88,7 @@ Before running the bot, you need to:
 # Creative variants
 !wully  # Replaces 'b' with 'w' in output
 !cully  # Replaces 'b' with 'c' in output
-```
+
 
 For more examples, see [docs/examples.md](docs/examples.md).
 
