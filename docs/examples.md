@@ -185,7 +185,7 @@ Bot: (No response - command ignored)
 
 2. **Configure environment:**
    ```ini
-   BOT_TOKEN=MTIzNDU2Nzg5MDEyMzQ1Njc4.Gh7H8I.J9K0L1M2N3O4P5Q6R7S8T9U0V1W2X3Y4Z5
+   BOT_TOKEN=your_actual_bot_token_here
    REACTION_CHANNEL_ID=123456789012345678
    PRONOUN_REACTION_POST_ID=987654321098765432
    ```
