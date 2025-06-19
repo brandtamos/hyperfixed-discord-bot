@@ -78,6 +78,7 @@ PRONOUN_REACTION_POST_ID=message_id_for_reactions
 3. Copy the message ID and add to `.env`
 
 ## Step 7: Create Discord Roles
+For more on Pronoun Roles, check out roles.md
 
 Create the following roles in your Discord server:
 
