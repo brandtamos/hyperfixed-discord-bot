@@ -1,0 +1,51 @@
+site_name: Hyperfixed Discord Bot
+site_description: A flexible Discord bot for custom commands, role management, and fun tracking features
+site_url: https://brandtamos.github.io/hyperfixed-discord-bot
+repo_url: https://github.com/brandtamos/hyperfixed-discord-bot
+repo_name: brandtamos/hyperfixed-discord-bot
+
+nav:
+  - Home: ../README.md
+  - Getting Started: getting-started.md
+  - Discord Setup: discord-setup.md
+  - Configuration: configuration.md
+  - Usage:
+      - Roles & Commands: roles.md
+      - Examples: examples.md
+      - CLI: cli.md
+      - API Reference: api.md
+  - Architecture: architecture.md
+  - Deployment: deployment.md
+  - FAQ: faq.md
+  - Changelog: changelog.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+plugins:
+  - search
+  - autorefs
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html

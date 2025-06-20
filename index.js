@@ -12,10 +12,12 @@ const storage = require('node-persist');
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
 
+/** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
 const bullyRegex = /^!\wully$/
 
 let trackedPronounMessage = null;
 
+/** @type {Map<string, string>} Maps emoji names to Discord role IDs */
 const emojiToRoleMap = new Map([
     ['pronoun_he', '1367997513122189312'],
     ['pronoun_she', '1367997561683837048'],
@@ -25,8 +27,15 @@ const emojiToRoleMap = new Map([
   ]);
 
 //init storage
+/** @type {Array<Object>} Array of custom command objects loaded from storage */
 let commandList = [];
 
+/**
+ * Initializes the bot's persistent storage and loads existing commands
+ * @async
+ * @function
+ * @returns {Promise<void>}
+ */
 const start = async function(){
     await storage.init({dir: 'storage'});
 
@@ -38,6 +47,11 @@ const start = async function(){
 }
 start();
 
+/**
+ * Checks if a command matches the bully pattern (!*ully)
+ * @param {string} command - The command to check
+ * @returns {boolean} True if command matches bully pattern
+ */
 function isBullyCommand(command) {
     return command.match(bullyRegex);
 }
@@ -79,6 +93,10 @@ client.on("messageCreate", async msg => {
     }
 });
 
+/**
+ * Displays help message with all available commands including custom ones
+ * @param {import('discord.js').Message} msg - Discord message object
+ */
 function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n';
@@ -91,6 +109,11 @@ function postHelp(msg){
     msg.channel.send(response);
 }
 
+/**
+ * Calculates time since last bully event and updates timestamp
+ * @async
+ * @returns {Promise<number>} Time difference in milliseconds
+ */
 async function getTimeSinceLastBully() {
     let lastBullyTime = await storage.getItem("lastBullyTime");
     const currentTimestamp = new Date().getTime();
@@ -105,6 +128,11 @@ async function getTimeSinceLastBully() {
     return currentTimestamp - lastBullyTime;
 }
 
+/**
+ * Increments the bully counter and returns the new count
+ * @async
+ * @returns {Promise<number>} New bully count
+ */
 async function incrementAndGetBullyCount() {
     let bullyCount = await storage.getItem("bullyCount");
 
@@ -119,6 +147,12 @@ async function incrementAndGetBullyCount() {
     return newBullyCount;
 }
 
+/**
+ * Updates bully record if current time exceeds previous record
+ * @async
+ * @param {number} diffTime - Time difference in milliseconds
+ * @returns {Promise<number>} Current record time in milliseconds
+ */
 async function getAndSetBullyRecord(diffTime) {
     let bullyRecord = await storage.getItem("bullyRecord");
 
@@ -134,6 +168,12 @@ async function getAndSetBullyRecord(diffTime) {
     return bullyRecord;
 }
 
+/**
+ * Handles bully tracking commands with dynamic output based on command used
+ * @async
+ * @param {import('discord.js').Message} msg - Discord message object
+ * @param {string} command - The bully command used (e.g., !bully, !wully)
+ */
 async function bullyHasHappened(msg, command){
     const diffTime = await getTimeSinceLastBully();
     const newBullyCount = await incrementAndGetBullyCount();
@@ -154,6 +194,12 @@ async function bullyHasHappened(msg, command){
     msg.channel.send(bullyMsg);
 }
 
+/**
+ * Adds a new custom command with description and output text
+ * @async
+ * @param {import('discord.js').Message} msg - Discord message invoking command
+ * @returns {Promise<void>}
+ */
 async function addCommand(msg){
     try{
         if(!msg.content.includes("|")){
@@ -195,6 +241,12 @@ async function addCommand(msg){
     }
 }
 
+/**
+ * Removes an existing custom command
+ * @async
+ * @param {import('discord.js').Message} msg - Discord message invoking command
+ * @returns {Promise<void>}
+ */
 async function removeCommand(msg){
     let commandToRemove = msg.content.split(" ")[1].toLowerCase();
     if(commandToRemove.charAt(0) != '!'){
@@ -211,6 +263,11 @@ async function removeCommand(msg){
     msg.reply("Command " + commandToRemove +  " has been removed!");
 }
 
+/**
+ * Checks if a command exists in storage and executes it
+ * @param {import('discord.js').Message} msg - Discord message object
+ * @param {string} command - The command to check for
+ */
 function checkForCommand(msg, command){
     let commandObject = commandList.find(commandObj => commandObj.command == command);
     if(commandObject){
@@ -218,6 +275,11 @@ function checkForCommand(msg, command){
     }
 }
 
+/**
+ * Checks if the user has MOD role permissions
+ * @param {import('discord.js').Message} msg - Discord message object
+ * @returns {boolean} True if user has MOD role
+ */
 function userIsMod(msg){
     return msg.member.roles.cache.find(r => r.name === "MOD")
 }
