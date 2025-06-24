@@ -5,11 +5,11 @@ function messageHasTemps(text){
 
 function convertTemps(text){
     const celsiusValues = extractAllCelsiusValues(text);
-    const farenheitValues = extractAllFarenheitValues(text);
+    const fahrenheitValues = extractAllFahrenheitValues(text);
 
     let responseMessage = '';
 
-    farenheitValues.forEach((fTemp) => {
+    fahrenheitValues.forEach((fTemp) => {
         responseMessage = responseMessage + fTemp + '°F = ' + convertFahrenheitToCelsius(fTemp) + '°C\n';
     });
 
@@ -20,7 +20,7 @@ function convertTemps(text){
     return responseMessage;
 }
 
-function extractAllFarenheitValues(text){
+function extractAllFahrenheitValues(text){
     const numbers = [];
     const temperatureRegex = /(-?\d+(\.\d+)?)°?[Ff]\b/g;
 
