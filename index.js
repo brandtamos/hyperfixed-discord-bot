@@ -8,6 +8,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,
 
 require('dotenv').config();
 const storage = require('node-persist');
+const temperature = require('./temperature.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -61,6 +62,8 @@ client.on("messageCreate", async msg => {
 
     //ignore messages from bots, including self
     if (msg.author.bot) return;
+
+    convertTemps(msg);
 
     const command = msg.content.split(" ")[0].toLowerCase();
 
@@ -282,6 +285,22 @@ function checkForCommand(msg, command){
  */
 function userIsMod(msg){
     return msg.member.roles.cache.find(r => r.name === "MOD")
+}
+
+function convertTemps(msg){
+    try{
+        const messageText = msg.content;
+
+        if(temperature.messageHasTemps(messageText) == true){
+            const responseMessage = temperature.convertTemps(messageText);
+            msg.channel.send(responseMessage);
+        }
+    }
+    catch(error){
+        console.error('Failed to convert temperature values');
+        return;
+    }
+    
 }
 
 //read message reactions
