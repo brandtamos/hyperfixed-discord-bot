@@ -10,6 +10,7 @@ require('dotenv').config();
 const storage = require('node-persist');
 const temperature = require('./temperature.js');
 const bully = require('./bully.js');
+const timezone = require('./timezone.js')
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -83,6 +84,9 @@ client.on("messageCreate", async msg => {
         case "!bullyleaderboard":
             bully.getLeaderboard(msg);
             break;
+        case "!time":
+            timezone.now(msg);
+            break;
         case "!addcommand":
             if(userIsMod(msg)) await addCommand(msg);
             break;
@@ -107,7 +111,8 @@ client.on("messageCreate", async msg => {
 function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n' +
-        '`!bullyleaderboard` - show the current bullying leaderboard\n';
+        '`!bullyleaderboard` - show the current bullying leaderboard\n' +
+        '`!time` - show the current time in Hyperfixed population centers\n';
 
     //populate the rest of the help list from stored commands
     commandList.forEach((command) => {
