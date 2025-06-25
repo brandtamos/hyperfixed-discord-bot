@@ -117,10 +117,6 @@ function postHelp(msg){
     msg.channel.send(response);
 }
 
-/*async function handleBully(msg, command){
-    await bully.bullyHasHappened(msg, command);
-}*/
-
 /**
  * Adds a new custom command with description and output text
  * @async
