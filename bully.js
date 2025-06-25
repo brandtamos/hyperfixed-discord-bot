@@ -64,7 +64,10 @@ async function updateLeaderboard(bullierName){
             await storage.setItem("bullyLeaderboard", updateLeaderboard);
         }
         else{
+            //new bullier! add them to the leaderboard array
             const newLeaderboardEntry = {userName: bullierName, bullyCount: 1}
+            leaderBoard.push(newLeaderboardEntry);
+            await storage.setItem("bullyLeaderboard", leaderBoard);
         }
     }
     else{
@@ -87,7 +90,7 @@ async function getLeaderboard(msg){
 
         const sortedLeaderboard = storedLeaderboard.sort((a, b) => b.bullyCount - a.bullyCount);
 
-        let responseMessage = '';
+        let responseMessage = '>>> '; //this sets a block quote in markdown
         sortedLeaderboard.forEach(element => {
             responseMessage = responseMessage + '`' + element.userName + '`: `' + element.bullyCount + '`\n';
         });
