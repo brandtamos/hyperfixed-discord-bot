@@ -21,11 +21,11 @@ let trackedPronounMessage = null;
 
 /** @type {Map<string, string>} Maps emoji names to Discord role IDs */
 const emojiToRoleMap = new Map([
-    ['pronoun_he', '1367997513122189312'],
-    ['pronoun_she', '1367997561683837048'],
-    ['pronoun_they', '1367997601722400818'],
-    ['pronoun_ask', '1367997625118490634'],
-    ['pronoun_any', '1367997724317712464']
+    ['pronoun_he', process.env.ROLE_PRONOUN_HE],
+    ['pronoun_she', process.env.ROLE_PRONOUN_SHE],
+    ['pronoun_they', process.env.ROLE_PRONOUN_THEY],
+    ['pronoun_ask', process.env.ROLE_PRONOUN_ASK],
+    ['pronoun_any', process.env.ROLE_PRONOUN_ANY],
   ]);
 
 //init storage
