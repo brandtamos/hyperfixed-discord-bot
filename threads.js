@@ -124,33 +124,9 @@ async function remove(msg) {
   }
 }
 
-/* lists all threads that are bookmarked in the 
- * channel where it is executed 
- *
- * usage: !threads
- */ 
+/* Lists all bookmarked threads in the server 
+ */
 async function list(msg) {
-  try {
-    let threadsInChannel = "";
-
-    threadsInChannel = threadList
-      .filter(t => t.channelID === msg.channel.id)
-      .map(t => `<#${t.threadID}> - ${t.description}`)
-      .join("\n");
-    
-    if (threadsInChannel != "") {
-      let response = "Threads of interest for this channel:\n";
-      response += threadsInChannel;
-      msg.channel.send(response);
-    } else {
-      msg.channel.send("No threads bookmarked in this channel.");
-    }
-  } catch(error) {
-    console.error(error);
-  }
-}
-
-async function listAll(msg) {
   try {
     const allThreads = threadList 
       .map(t => `<#${t.threadID}> - ${t.description}`)
@@ -186,4 +162,3 @@ async function isThread(client, threadID) {
 exports.add = add;
 exports.remove = remove;
 exports.list = list;
-exports.listAll = listAll;
