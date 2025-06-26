@@ -123,8 +123,8 @@ function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n' +
         '`!bullyleaderboard` - show the current bullying leaderboard\n' +
-        '`!threads` - shows all bookmarked threads on the server';
-        '`!time` - show the current time in Hyperfixed population centers\n';
+        '`!time` - show the current time in Hyperfixed population centers\n'+
+        '`!threads` - shows all bookmarked threads on the server\n';
 
 
     //populate the rest of the help list from stored commands
