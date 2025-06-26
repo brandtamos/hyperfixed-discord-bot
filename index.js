@@ -10,6 +10,7 @@ require('dotenv').config();
 const storage = require('node-persist');
 const temperature = require('./temperature.js');
 const bully = require('./bully.js');
+const threads = require('./threads.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -89,6 +90,15 @@ client.on("messageCreate", async msg => {
         case "!removecommand":
             if(userIsMod(msg)) await removeCommand(msg);
             break;
+        case "!addthread":
+            if(userIsMod(msg)) await threads.add(msg);
+            break;
+        case "!removethread":
+            if(userIsMod(msg)) await threads.remove(msg);
+            break;
+        case "!threads":
+            threads.list(msg);
+            break;
         default:
             break;
     }
@@ -107,7 +117,8 @@ client.on("messageCreate", async msg => {
 function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n' +
-        '`!bullyleaderboard` - show the current bullying leaderboard\n';
+        '`!bullyleaderboard` - show the current bullying leaderboard\n' +
+        '`!threads` - shows bookmarked threads in the current channel';
 
     //populate the rest of the help list from stored commands
     commandList.forEach((command) => {
