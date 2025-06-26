@@ -11,7 +11,7 @@ const storage = require('node-persist');
 const temperature = require('./temperature.js');
 const bully = require('./bully.js');
 const threads = require('./threads.js');
-const timezone = require('./timezone.js')
+const timezone = require('./timezone.js');
 
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
