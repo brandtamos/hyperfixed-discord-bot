@@ -7,6 +7,7 @@ async function now(msg){
 
     const rightAboutNow = DateTime.now()
     const seattle = rightAboutNow.setZone("America/Los_Angeles");
+    const regina = rightAboutNow.setZone("America/Regina");
     const fargo = rightAboutNow.setZone("America/Chicago");
     const charleston = rightAboutNow.setZone("America/New_York");
     const sthlm   = rightAboutNow.setZone("Europe/Stockholm");
@@ -14,6 +15,7 @@ async function now(msg){
 
     let responseMessage = "Current time in:";
     responseMessage += "\n**Seattle**: " + seattle.toFormat(format);
+    responseMessage += "\n**Regina**: " + regina.toFormat(format);
     responseMessage += "\n**Fargo**: " + fargo.toFormat(format);
     responseMessage += "\n**Charleston**: " + charleston.toFormat(format);
     responseMessage += "\n**Stockholm**: " + sthlm.toFormat(format);
