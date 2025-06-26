@@ -3,10 +3,13 @@
 ## General Questions
 
 ### Q: What does this bot do?
-A: The Hyperfixed Discord Bot provides three main features:
+A: The Hyperfixed Discord Bot provides several main features:
 - **Custom Commands**: Create text responses triggered by commands
 - **Pronoun Roles**: Automatic role assignment via emoji reactions
-- **Bully Tracking**: Fun statistical tracking for "bully" events
+- **Bully Tracking**: Fun statistical tracking for "bully" events with leaderboard
+- **Time Zone Display**: Show current time across multiple global locations
+- **Temperature Conversion**: Automatic Celsius ↔ Fahrenheit conversion for any temperatures mentioned
+- **Easter Eggs**: Weezer detection and other fun responses
 
 ### Q: Is this bot free to use?
 A: Yes, this is an open-source bot that you can host yourself for free.
@@ -47,6 +50,15 @@ A: No, custom commands only send text responses. For roles, use the built-in pro
 
 ### Q: What bully commands are available?
 A: Any command matching the pattern `!*ully` works (e.g., `!bully`, `!wully`, `!cully`, `!dully`). The bot replaces letters in the output based on the command used.
+
+### Q: Does the bot automatically respond to temperature mentions?
+A: Yes! The bot automatically detects temperature values in any message and provides conversions between Celsius and Fahrenheit. It recognizes formats like `75°F`, `75F`, `24°C`, `24C`, and supports negative/decimal values.
+
+### Q: What time zones does the `!time` command show?
+A: The `!time` command displays current time in Hyperfixed population centers: Seattle, Fargo, Charleston, Stockholm, and Sydney.
+
+### Q: How does the bully leaderboard work?
+A: The `!bullyleaderboard` command shows rankings of users by how many times they've used bully commands, sorted by frequency from highest to lowest.
 
 ## Pronoun Roles
 
@@ -122,7 +134,7 @@ A: Open an issue on the [GitHub repository](https://github.com/brandtamos/hyperf
 A: You don't. They're given to you like bread is thrown to the masses. 
 
 ### Q: Is there a Discord server for support?
-A: Currently, support is provided through GitHub issues and documentation.
+A: Currently, support is provided through GitHub issues and documentation. Or you can ask a bot thot in chat. 
 
 ## Easter Eggs
 
