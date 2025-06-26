@@ -99,6 +99,9 @@ client.on("messageCreate", async msg => {
         case "!threads":
             threads.list(msg);
             break;
+        case "!allthreads":
+            threads.listAll(msg);
+            break;
         default:
             break;
     }
@@ -118,7 +121,8 @@ function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n' +
         '`!bullyleaderboard` - show the current bullying leaderboard\n' +
-        '`!threads` - shows bookmarked threads in the current channel';
+        '`!threads` - shows bookmarked threads in the current channel' +
+        '`!allthreads` - shows all bookmarked threads on the server';
 
     //populate the rest of the help list from stored commands
     commandList.forEach((command) => {

@@ -143,8 +143,28 @@ async function list(msg) {
       response += threadsInChannel;
       msg.channel.send(response);
     } else {
-      msg.channel.send("No threads stored for this channel.");
+      msg.channel.send("No threads bookmarked in this channel.");
     }
+  } catch(error) {
+    console.error(error);
+  }
+}
+
+async function listAll(msg) {
+  try {
+    const allThreads = threadList 
+      .map(t => `<#${t.threadID}> - ${t.description}`)
+      .join("\n");
+
+   
+    if(allThreads != "") {
+      let response = "All bookmarked threads on the server:\n";
+      response += allThreads;
+      msg.channel.send(response);
+    } else {
+      msg.channel.send("No threads bookmarked on the server.")
+    }
+    
   } catch(error) {
     console.error(error);
   }
@@ -166,3 +186,4 @@ async function isThread(client, threadID) {
 exports.add = add;
 exports.remove = remove;
 exports.list = list;
+exports.listAll = listAll;
