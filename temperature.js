@@ -1,5 +1,5 @@
 function messageHasTemps(text){
-    const tempMessageRegex = /-?\d+(\.\d+)?°?[CFcf]\b/;
+    const tempMessageRegex = /(?<=^|\s)(-?\d+(?:\.\d+)?)°?[CFcf](?=\s|$|[.,;!?:])/g;
     return tempMessageRegex.test(text);
 }
 
