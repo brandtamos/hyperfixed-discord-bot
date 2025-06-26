@@ -23,17 +23,30 @@ async function add(msg) {
     const commandUsage = "\n Command usage:\n`!addthread [thread id] | [thread description]`";
     const msgSplit = msg.content.split("|");
     let threadDescription = msgSplit[1];
-    const threadID = msgSplit[0].split(" ")[1];
+    // remove the first 11 chars to remove command and first space
+    let threadID = msgSplit[0].slice(11); 
 
     let error = "";
     if (threadID === undefined) {
       error += "No thread id provided.\n";
     }
+    
     if (threadDescription === undefined) {
-      error += "No thread description provided.\n"
+      error += "No thread description provided.\n";
     }
+
+    // if this check fails, an id is not provided 
     if (!await isThread(msg.client, threadID)) {
-      error += "`" + threadID + "` is not a thread id.\n";
+      
+      // try to see if it is a thread name (get id by the name)
+      // first we trim whitespaces at the ends 
+      threadID = threadID.trim()
+      threadObj = msg.channel.threads.cache.find(c => c.name == threadID);
+      threadID = threadObj.id;
+
+      if (!await isThread(msg.client, threadID)) {
+        error += "`" + threadID + "` is not a thread id or thread name.\n";
+      }
     }
 
     // send errors as DM:s to the user
@@ -76,7 +89,7 @@ async function add(msg) {
  */ 
 async function remove(msg) {
   try {
-    const threadID = msg.content.split(" ")[1];
+    let threadID = msg.content.slice(14);
     
     let error = ""
     if (threadID === undefined) {
@@ -84,7 +97,13 @@ async function remove(msg) {
     }
 
     if (threadID != undefined && !threadList.some(t => t.threadID == threadID)) {
-      error = "Thread is not stored."
+      threadID = threadID.trim()
+      threadObj = msg.channel.threads.cache.find(c => c.name == threadID);
+      threadID = threadObj.id;
+
+      if (!await isThread(msg.client, threadID)) {
+        error = "Thread is not stored."
+      }
     }
 
     if (error != "") {
