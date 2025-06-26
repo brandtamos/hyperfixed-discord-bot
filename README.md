@@ -1,9 +1,11 @@
 # Hyperfixed Discord Bot
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/brandtamos/hyperfixed-discord-bot/ci.yml)](https://github.com/brandtamos/hyperfixed-discord-bot/actions)
-[![License](https://img.shields.io/github/license/brandtamos/hyperfixed-discord-bot)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/hyperfixedbot)](https://www.npmjs.com/package/hyperfixedbot)
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](package.json)
 [![GitHub stars](https://img.shields.io/github/stars/brandtamos/hyperfixed-discord-bot?style=social)](https://github.com/brandtamos/hyperfixed-discord-bot/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/commits/main)
+[![Issues](https://img.shields.io/github/issues/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/issues)
+[![Discord.js](https://img.shields.io/badge/discord.js-v14.14.1-blue.svg)](https://discord.js.org/)
+[![Contributors](https://img.shields.io/github/contributors/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/graphs/contributors)
 
 ## Overview
 
