@@ -66,7 +66,7 @@ The record for the longest amount of time brandtamos has not been bullied is 5 d
 - `!help` - Displays all available commands including custom commands
 
 ### Time Zone Command
-- `!time` - Shows current time in Hyperfixed population centers (Seattle, Fargo, Charleston, Stockholm, Sydney)
+- `!time` - Shows current time in Hyperfixed population centers (Seattle, Fargo, Charleston, Stockholm, Sydney, and the beautiful city of Regina)
 
 ### Bully Leaderboard
 - `!bullyleaderboard` - Shows rankings of users by their bully command usage frequency

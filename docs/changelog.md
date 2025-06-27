@@ -46,7 +46,7 @@
 - @WPTK (BK)
 - @markmcd (Mark McDonald)
 - @lelbarton (Laura Barton)
-- @gla3dr
+- @gla3dr (Zack M)
 
 ## [1.0.0] - 2025-06-17
 ### ✨ Features
