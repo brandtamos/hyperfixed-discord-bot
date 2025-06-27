@@ -150,6 +150,84 @@ Bot: *Weeer
 
 The bot responds to any variation of "weezer" in any message (case-insensitive).
 
+## Time Zone Examples
+
+### Viewing Current Time
+
+**Command:**
+```
+!time
+```
+
+**Output:**
+```
+Current time in:
+**Seattle**: Mon 26 Jun 14:30 / 02:30 PM
+**Fargo**: Mon 26 Jun 16:30 / 04:30 PM
+**Charleston**: Mon 26 Jun 17:30 / 05:30 PM
+**Stockholm**: Mon 26 Jun 23:30 / 11:30 PM
+**Sydney**: Tue 27 Jun 07:30 / 07:30 AM
+```
+
+## Temperature Conversion Examples
+
+### Automatic Temperature Detection
+
+**User mentions temperature:**
+```
+User: It's 75°F outside today!
+Bot: 75°F = 24°C
+```
+
+**Multiple temperatures:**
+```
+User: The forecast shows 32°F tomorrow and 98°F later this week
+Bot: 32°F = 0°C
+98°F = 37°C
+```
+
+**Celsius to Fahrenheit:**
+```
+User: Water boils at 100°C
+Bot: 100°C = 212°F
+```
+
+**Mixed formats:**
+```
+User: It's 20C here but 85F there
+Bot: 20°C = 68°F
+85°F = 29°C
+```
+
+The bot automatically detects temperature values in various formats:
+- `75°F`, `75F`, `75f`
+- `24°C`, `24C`, `24c`
+- Supports negative temperatures: `-10°C`
+- Supports decimal values: `98.6°F`
+
+## Bully Leaderboard Examples
+
+### Viewing the Leaderboard
+
+**Command:**
+```
+!bullyleaderboard
+```
+
+**Output with multiple users:**
+```
+>>> `alice`: `12`
+`bob`: `8`
+`charlie`: `3`
+`dave`: `1`
+```
+
+**Empty leaderboard:**
+```
+!bullyleaderboard
+Bot: Nobody has bullied yet!
+```
+
 ## MOD Role Usage
 
 ### Setting Up MOD Permissions
@@ -188,6 +266,11 @@ Bot: (No response - command ignored)
    BOT_TOKEN=your_actual_bot_token_here
    REACTION_CHANNEL_ID=123456789012345678
    PRONOUN_REACTION_POST_ID=987654321098765432
+   ROLE_PRONOUN_HE=111111111111111111
+   ROLE_PRONOUN_SHE=222222222222222222
+   ROLE_PRONOUN_THEY=333333333333333333
+   ROLE_PRONOUN_ASK=444444444444444444
+   ROLE_PRONOUN_ANY=555555555555555555
    ```
 
 3. **Create Discord roles:**
@@ -205,7 +288,11 @@ Bot: (No response - command ignored)
 
 5. **Test functionality:**
    - `!help` - Verify bot responds
+   - `!time` - Test time zone display
    - `!bully` - Test bully tracking
+   - `!bullyleaderboard` - Test leaderboard
+   - Temperature test - Type "It's 75°F today" to test conversion
+   - Weezer test - Type "weezer" to test easter egg
    - Reaction test - Add/remove pronoun reactions
    - MOD test - Create a custom command
 
