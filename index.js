@@ -11,6 +11,7 @@ const storage = require('node-persist');
 const temperature = require('./temperature.js');
 const bully = require('./bully.js');
 const threads = require('./threads.js');
+const timezone = require('./timezone.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -118,7 +119,8 @@ function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!bully` - use this any time brandtamos is bullied\n' +
         '`!bullyleaderboard` - show the current bullying leaderboard\n' +
-        '`!threads` - shows all bookmarked threads on the server';
+        '`!time` - show the current time in Hyperfixed population centers\n'+
+        '`!threads` - shows all bookmarked threads on the server\n';
 
     //populate the rest of the help list from stored commands
     commandList.forEach((command) => {
