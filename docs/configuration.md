@@ -8,6 +8,13 @@ The bot requires the following environment variables to be set in your `.env` fi
 BOT_TOKEN: <string>           # Discord bot token from Discord Developer Portal
 REACTION_CHANNEL_ID: <string> # Channel ID where pronoun reactions are monitored
 PRONOUN_REACTION_POST_ID: <string> # Specific message ID for pronoun role reactions
+
+# Pronoun Role IDs (required if using reaction-based pronoun roles)
+ROLE_PRONOUN_HE: <string>     # Discord role ID for He/Him pronouns
+ROLE_PRONOUN_SHE: <string>    # Discord role ID for She/Her pronouns  
+ROLE_PRONOUN_THEY: <string>   # Discord role ID for They/Them pronouns
+ROLE_PRONOUN_ASK: <string>    # Discord role ID for Ask Me pronouns
+ROLE_PRONOUN_ANY: <string>    # Discord role ID for Any pronouns
 ```
 
 ### Variable Details
@@ -30,6 +37,18 @@ PRONOUN_REACTION_POST_ID: <string> # Specific message ID for pronoun role reacti
 - **How to get**: Right-click the reaction message → "Copy ID"
 - **Format**: Numeric string (e.g., `987654321098765432`)
 
+#### Pronoun Role Environment Variables
+- **Required**: Yes (if using pronoun roles)
+- **Description**: Discord role IDs for each pronoun category
+- **Variables**:
+  - `ROLE_PRONOUN_HE`: Role ID for He/Him pronouns
+  - `ROLE_PRONOUN_SHE`: Role ID for She/Her pronouns
+  - `ROLE_PRONOUN_THEY`: Role ID for They/Them pronouns
+  - `ROLE_PRONOUN_ASK`: Role ID for Ask Me pronouns
+  - `ROLE_PRONOUN_ANY`: Role ID for Any pronouns
+- **How to get**: Server Settings → Roles → Right-click role → "Copy ID"
+- **Format**: Numeric string (e.g., `123456789012345678`)
+
 ## Example Configuration
 
 Example `.env` file:
@@ -38,6 +57,11 @@ Example `.env` file:
 BOT_TOKEN=your_actual_bot_token_here
 REACTION_CHANNEL_ID=123456789012345678
 PRONOUN_REACTION_POST_ID=987654321098765432
+ROLE_PRONOUN_HE=123456789012345678
+ROLE_PRONOUN_SHE=223456789012345678
+ROLE_PRONOUN_THEY=323456789012345678
+ROLE_PRONOUN_ASK=423456789012345678
+ROLE_PRONOUN_ANY=523456789012345678
 ```
 
 ## Optional Configuration
@@ -92,4 +116,9 @@ Example `.env`:
 BOT_TOKEN=abc123
 REACTION_CHANNEL_ID=123456789
 PRONOUN_REACTION_POST_ID=987654321
+ROLE_PRONOUN_HE=123456789
+ROLE_PRONOUN_SHE=223456789
+ROLE_PRONOUN_THEY=323456789
+ROLE_PRONOUN_ASK=423456789
+ROLE_PRONOUN_ANY=523456789
 ```

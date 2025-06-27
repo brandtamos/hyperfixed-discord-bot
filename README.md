@@ -1,9 +1,11 @@
 # Hyperfixed Discord Bot
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/brandtamos/hyperfixed-discord-bot/ci.yml)](https://github.com/brandtamos/hyperfixed-discord-bot/actions)
-[![License](https://img.shields.io/github/license/brandtamos/hyperfixed-discord-bot)](LICENSE)
-[![npm version](https://img.shields.io/npm/v/hyperfixedbot)](https://www.npmjs.com/package/hyperfixedbot)
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](package.json)
 [![GitHub stars](https://img.shields.io/github/stars/brandtamos/hyperfixed-discord-bot?style=social)](https://github.com/brandtamos/hyperfixed-discord-bot/stargazers)
+[![Last Commit](https://img.shields.io/github/last-commit/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/commits/main)
+[![Issues](https://img.shields.io/github/issues/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/issues)
+[![Discord.js](https://img.shields.io/badge/discord.js-v14.14.1-blue.svg)](https://discord.js.org/)
+[![Contributors](https://img.shields.io/github/contributors/brandtamos/hyperfixed-discord-bot)](https://github.com/brandtamos/hyperfixed-discord-bot/graphs/contributors)
 
 ## Overview
 
@@ -83,6 +85,12 @@ See the **[Discord Setup Guide](docs/discord-setup.md)** for complete instructio
   Create text responses with `!addcommand` / `!removecommand` (MOD role required).
 - **Bully Tracking**  
   Fun statistics tracking with `!bully`, `!wully`, and other `!*ully` commands.
+- **Bully Leaderboard**  
+  Rankings of users by bully command frequency with `!bullyleaderboard`.
+- **Time Zone Display**  
+  Show current time across Hyperfixed population centers with `!time`.
+- **Automatic Temperature Conversion**  
+  Real-time Celsius ↔ Fahrenheit conversion for any temperatures mentioned in chat.
 - **Reaction-based Pronoun Roles**  
   Automatic role assignment via emoji reactions.
 - **Auto-generated Help**  
@@ -142,6 +150,11 @@ Set the following environment variables in your `.env` file:
 | `BOT_TOKEN`                | Your Discord bot token                | *None*  |
 | `REACTION_CHANNEL_ID`      | Channel ID for pronoun reactions      | *None*  |
 | `PRONOUN_REACTION_POST_ID` | Message ID for pronoun reactions      | *None*  |
+| `ROLE_PRONOUN_HE`          | Role ID for He/Him pronouns           | *None*  |
+| `ROLE_PRONOUN_SHE`         | Role ID for She/Her pronouns          | *None*  |
+| `ROLE_PRONOUN_THEY`        | Role ID for They/Them pronouns        | *None*  |
+| `ROLE_PRONOUN_ASK`         | Role ID for Ask Me pronouns           | *None*  |
+| `ROLE_PRONOUN_ANY`         | Role ID for Any pronouns              | *None*  |
 
 ---
 
@@ -152,6 +165,8 @@ Set the following environment variables in your `.env` file:
 - **[Getting Started](docs/getting-started.md)** – Installation and first run  
 - **[Discord Setup](docs/discord-setup.md)** – Complete Discord bot setup guide  
 - **[Configuration](docs/configuration.md)** – Environment variables and settings  
+- **[Bot Commands](docs/commands.md)** – Complete command reference and usage
+- **[Available Roles](docs/roles.md)** – Pronoun roles and administrative permissions
 - **[Examples](docs/examples.md)** – Real usage examples and workflows  
 - **[FAQ](docs/faq.md)** – Common questions and troubleshooting  
 - **[Deployment](docs/deployment.md)** – Production hosting options  
@@ -169,6 +184,9 @@ Set the following environment variables in your `.env` file:
 
 ```text
 ├── index.js                  # Main bot logic and event handlers
+├── bully.js                  # Bully tracking and leaderboard functionality  
+├── temperature.js            # Automatic temperature conversion utilities
+├── timezone.js               # Time zone display functionality
 ├── package.json              # Project metadata and scripts
 ├── .env_example              # Environment variable template
 ├── .gitignore                # Ignore configuration
@@ -178,12 +196,14 @@ Set the following environment variables in your `.env` file:
 │   ├── storedCommands        # Custom commands
 │   ├── lastBullyTime         # Bully tracking timestamp
 │   ├── bullyCount            # Total bully events
-│   └── bullyRecord           # Longest streak record
+│   ├── bullyRecord           # Longest streak record
+│   └── bullyLeaderboard      # User rankings by bully frequency
 └── docs/                     # Comprehensive documentation
     ├── api.md                # Library/API reference
     ├── architecture.md       # System design overview
     ├── changelog.md          # Version history
     ├── cli.md                # Command-line usage
+    ├── commands.md           # Bot commands reference and usage
     ├── configuration.md      # Environment variables & settings
     ├── deployment.md         # Production hosting options
     ├── discord-setup.md      # Discord bot setup guide
@@ -191,7 +211,7 @@ Set the following environment variables in your `.env` file:
     ├── faq.md                # Troubleshooting & common questions
     ├── getting-started.md    # Installation & first run
     ├── mkdocs.yml            # MkDocs site configuration
-    └── roles.md              # Pronoun roles & built-ins
+    └── roles.md              # Available roles and permissions
 
 ```
 

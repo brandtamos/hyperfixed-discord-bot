@@ -26,6 +26,8 @@ After starting the bot, test these commands in your Discord server:
 - `!bully` - Tests bully tracking system
 - Add/remove reactions on your pronoun message to test role assignment
 
+For complete command documentation, see [Bot Commands Reference](commands.md).
+
 ## Troubleshooting
 
 ### Common Issues

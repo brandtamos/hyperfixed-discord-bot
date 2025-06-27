@@ -1,4 +1,4 @@
-# Available Roles & Commands
+# Available Roles
 
 ## Pronoun Roles
 
@@ -17,71 +17,23 @@ The Hyperfixed Discord Bot supports the following built-in pronoun roles that us
 2. Click the matching reaction emoji to toggle that pronoun role
 3. Removing your reaction removes the role from your account
 
-## Custom Commands
+## Administrative Roles
 
-Create custom text responses that any user can trigger. Note: These are **text responses**, not roles.
+### MOD Role
 
-### Creating Custom Commands
-**Syntax:** `!addcommand <commandName> <description> | <output>`
+The **MOD** role provides elevated permissions for bot administration.
 
-**Example:**
-```
-!addcommand gamer Gaming Legend | You're a gaming legend!
-```
+**Role Name:** `MOD`
 
-**Requirements:**
-- Only users with the "MOD" role can create/remove commands
-- Must include a pipe `|` separator between description and output
-- Command names are automatically prefixed with `!` if not provided
+**Permissions Granted:**
+- Create custom commands using `!addcommand`
+- Remove custom commands using `!removecommand`
 
-### Using Custom Commands
-Once created, any user can trigger the command:
-```
-!gamer
-```
-**Output:** `You're a gaming legend!`
-
-### Removing Custom Commands
-**Syntax:** `!removecommand <commandName>`
-
-**Example:**
-```
-!removecommand gamer
-```
+**Assignment:** Manual assignment by server administrators
 
 **Requirements:**
-- Only users with the "MOD" role can remove commands
+- Role must be named exactly "MOD" (case-sensitive)
+- Role should be assigned to trusted users only
+- Users without this role cannot modify custom commands
 
-## Bully Tracking Commands
-
-Special tracking system for monitoring and recording "bully" events with statistics.
-
-### Available Bully Commands
-- `!bully` - Standard bully tracking
-- `!wully` - Alternative bully tracking (replaces 'b' with 'w' in output)
-- Any command matching pattern `!*ully` (e.g., `!cully`, `!dully`)
-
-### Bully Command Features
-- **Time Tracking**: Records time since last bully event
-- **Total Counter**: Tracks total number of bully events
-- **Record Keeping**: Maintains longest streak without bullying
-- **Dynamic Output**: Replaces letters in output based on command used
-
-### Example Bully Output
-```
-Benevolent moderator brandtamos has been bullied.
-
-It has been 2 days, 3 hours, 15 minutes and 42 seconds since brandtamos was last bullied.
-
-brandtamos has been bullied a total of 7 times.
-
-The record for the longest amount of time brandtamos has not been bullied is 5 days, 12 hours, 30 minutes and 15 seconds.
-```
-
-## Built-in Commands
-
-### Help Command
-- `!help` - Displays all available commands including custom commands
-
-### Easter Eggs
-- **Weezer Detection**: Bot responds with "*Weeer" when "weezer" is mentioned in any message (what's with these homies dissing my bot?)
+For complete command documentation, see [Bot Commands Reference](commands.md).
