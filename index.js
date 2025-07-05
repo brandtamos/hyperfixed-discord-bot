@@ -19,7 +19,7 @@ const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
 
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
-const bullyRegex = /^!\wully$/
+const bullyRegex = /^!\p{L}ully$/u;
 
 let trackedPronounMessage = null;
 
