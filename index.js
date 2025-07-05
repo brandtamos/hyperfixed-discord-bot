@@ -9,6 +9,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,
 require('dotenv').config();
 const storage = require('node-persist');
 const temperature = require('./temperature.js');
+const distance = require('./distance.js');
 const bully = require('./bully.js');
 const threads = require('./threads.js');
 const timezone = require('./timezone.js');
@@ -18,7 +19,7 @@ const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
 
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
-const bullyRegex = /^!\wully$/
+const bullyRegex = /^!\p{L}ully$/u;
 
 let trackedPronounMessage = null;
 
@@ -68,6 +69,7 @@ client.on("messageCreate", async msg => {
     if (msg.author.bot) return;
 
     convertTemps(msg);
+    convertDistances(msg);
 
     const command = msg.content.split(" ")[0].toLowerCase();
 
@@ -241,6 +243,22 @@ function convertTemps(msg){
     
 }
 
+function convertDistances(msg){
+    try{
+        const messageText = msg.content;
+
+        if(distance.messageHasDistance(messageText) == true){
+            const responseMessage = distance.convertDistance(messageText);
+            msg.channel.send(responseMessage);
+        }
+    }
+    catch(error){
+        console.error('Failed to convert distance values', error);
+        return;
+    }
+    
+}
+
 //read message reactions
 client.on('messageReactionAdd', async (reaction, user) => {
     // Handle partials
@@ -308,3 +326,4 @@ client.login(process.env.BOT_TOKEN).catch(err => {
     console.log('destroying bot client');
     client.destroy();
   });
+
