@@ -100,7 +100,7 @@ A: The bot's role must be positioned higher than any roles it needs to manage in
 ## Development & Customization
 
 ### Q: Can I add new features?
-A: Yes! The bot is designed to be extensible. See the [API Reference](api.md) for function documentation.
+A: Yes! The bot is designed to be extensible. Check the code in the main files to understand how features are implemented.
 
 ### Q: How do I backup my custom commands?
 A: Custom commands are stored in the `storage/` directory. Back up this folder to preserve your commands.
