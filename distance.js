@@ -43,11 +43,21 @@ function extractAllMilesValues(text){
 }
 
 function convertKmToMiles(km) {
-  return Math.round(km * 0.621371);
+  let mi = km * 0.621371;
+  if (Math.abs(mi) < 10) {
+    return mi.toFixed(2);
+  } else {
+    return Math.round(mi);
+  }
 }
 
 function convertMilesToKm(mi) {
-  return Math.round(mi * 1.60934);
+  let km = mi * 1.60934;
+  if (Math.abs(km) < 10) {
+    return km.toFixed(2);
+  } else {
+    return Math.round(km);
+  }
 }
 
 exports.messageHasDistance= messageHasDistance;
