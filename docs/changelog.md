@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2025-07-15
+
+### Added
+- Automatic distance conversion detection in messages (`distance.js`)
+- Support for kilometers/km to miles/mi conversion and vice versa
+- Smart rounding for distance values (2 decimal places for values under 10, whole numbers for larger values)
+
+### Changed
+- Improved bully command regex to support Unicode characters (`/^!\p{L}ully$/u`)
+- Enhanced bully command pattern matching for unicode character support
+
+### Contributors
+- @brandtamos (Evan Brandt)
+- @xulinus (linus)
+- @markmcd (Mark McDonald)
+- @WPTK (BK)
+
 ## [2.2.0] - 2025-07-15 (hackin' and slashin')
 
 ### Changed
@@ -23,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Corrected FAQ references to non-existent documentation
 - Updated changelog to remove references to deleted documentation files
+
+### Contributors
+- @brandtamos (Evan Brandt)
+- @WPTK (BK)
 
 ## [2.1.0] - 2025-06-26
 

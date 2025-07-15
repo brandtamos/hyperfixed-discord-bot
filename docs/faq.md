@@ -54,6 +54,9 @@ A: Any command matching the pattern `!*ully` works (e.g., `!bully`, `!wully`, `!
 ### Q: Does the bot automatically respond to temperature mentions?
 A: Yes! The bot automatically detects temperature values in any message and provides conversions between Celsius and Fahrenheit. It recognizes formats like `75°F`, `75F`, `24°C`, `24C`, and supports negative/decimal values.
 
+### Q: Does the bot automatically respond to distance mentions?
+A: Yes! The bot automatically detects distance values in any message and provides conversions between kilometers and miles. It recognizes formats like `5 km`, `5km`, `5 kilometers`, `10 mi`, `10mi`, `10 miles`, and supports decimal values.
+
 ### Q: What time zones does the `!time` command show?
 A: The `!time` command displays current time in Hyperfixed population centers: Seattle, Fargo, Charleston, Stockholm, and Sydney.
 

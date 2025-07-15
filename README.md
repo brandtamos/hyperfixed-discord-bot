@@ -72,6 +72,7 @@ Requires the "MOD" role:
 ### Automatic features
 
 - **Temperature conversion** - Automatically converts between Celsius and Fahrenheit when temperatures are mentioned
+- **Distance conversion** - Automatically converts between kilometers and miles when distances are mentioned
 - **Pronoun roles** - Assigns roles based on emoji reactions to the configured message
 - **Weezer detection** - Responds to Weezer mentions
 
@@ -81,6 +82,7 @@ Requires the "MOD" role:
 ├── index.js              # Main bot logic and event handlers
 ├── bully.js              # Bully tracking and leaderboard functionality  
 ├── temperature.js        # Temperature conversion utilities
+├── distance.js           # Distance conversion utilities
 ├── timezone.js           # Time zone display functionality
 ├── threads.js            # Thread bookmarking functionality
 ├── package.json          # Project metadata and dependencies
