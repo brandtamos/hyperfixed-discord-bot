@@ -205,6 +205,44 @@ The bot automatically detects temperature values in various formats:
 - Supports negative temperatures: `-10°C`
 - Supports decimal values: `98.6°F`
 
+## Distance Conversion Examples
+
+### Automatic Distance Detection
+
+**User mentions distance in kilometers:**
+```
+User: The store is 5 km away
+Bot: 5 km = 3.11 mi
+```
+
+**User mentions distance in miles:**
+```
+User: It's about 10 miles to the airport
+Bot: 10 mi = 16 km
+```
+
+**Multiple distances:**
+```
+User: The marathon is 42 km but I only ran 3 miles today
+Bot: 42 km = 26 mi
+3 mi = 4.83 km
+```
+
+**Various formats supported:**
+```
+User: Distance: 100 kilometers, 50 km, 25 miles, 15 mi
+Bot: 100 km = 62 mi
+50 km = 31 mi
+25 mi = 40 km
+15 mi = 24 km
+```
+
+The bot automatically detects distance values in various formats:
+- `5 km`, `5km`, `5 kilometers`, `5 kilometer`
+- `10 mi`, `10mi`, `10 miles`, `10 mile`
+- Supports decimal values: `2.5 km`, `1.25 miles`
+- Smart rounding: values under 10 show 2 decimal places, larger values are rounded to whole numbers
+
 ## Bully Leaderboard Examples
 
 ### Viewing the Leaderboard

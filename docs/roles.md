@@ -1,39 +1,40 @@
-# Available Roles
+# Available roles
 
-## Pronoun Roles
+## Pronoun roles
 
-The Hyperfixed Discord Bot supports the following built-in pronoun roles that users can select via reactions.
+The bot supports pronoun roles that users can select via emoji reactions.
 
-| Role Name     | Assignment Emoji Token                   | Assignment Emoji Name | Role ID                 |
-|---------------|------------------------------------------|-----------------------|-------------------------|
-| **He/Him**    | `<:pronoun_he:1367994903048753222>`     | `pronoun_he`          | `1367997513122189312`   |
-| **She/Her**   | `<:pronoun_she:1367993600721424526>`    | `pronoun_she`         | `1367997561683837048`   |
-| **They/Them** | `<:pronoun_they:1367993598078877746>`   | `pronoun_they`        | `1367997601722400818`   |
-| **Ask Me**    | `<:pronoun_ask:1367993602109603972>`    | `pronoun_ask`         | `1367997625118490634`   |
-| **Any**       | `<:pronoun_any:1367993599895011459>`    | `pronoun_any`         | `1367997724317712464`   |
+### Supported pronouns
 
-### Managing Pronoun Roles
-1. Go to the configured reaction channel and find the bot's pronoun post
-2. Click the matching reaction emoji to toggle that pronoun role
-3. Removing your reaction removes the role from your account
+- **He/Him** - Assigned via `pronoun_he` emoji
+- **She/Her** - Assigned via `pronoun_she` emoji  
+- **They/Them** - Assigned via `pronoun_they` emoji
+- **Ask Me** - Assigned via `pronoun_ask` emoji
+- **Any** - Assigned via `pronoun_any` emoji
 
-## Administrative Roles
+### How pronoun roles work
 
-### MOD Role
+1. Create Discord roles for each pronoun set you want to support
+2. Create custom emojis with the names listed above
+3. Set up a message where users can react with pronoun emojis
+4. Configure the bot with the message ID and role IDs in your `.env` file
+5. Users click reactions to add/remove pronoun roles
+
+## Administrative roles
+
+### MOD role
 
 The **MOD** role provides elevated permissions for bot administration.
 
-**Role Name:** `MOD`
-
-**Permissions Granted:**
+**Permissions granted:**
 - Create custom commands using `!addcommand`
 - Remove custom commands using `!removecommand`
+- Add bookmarked threads using `!addthread`
+- Remove bookmarked threads using `!removethread`
 
 **Assignment:** Manual assignment by server administrators
 
 **Requirements:**
 - Role must be named exactly "MOD" (case-sensitive)
 - Role should be assigned to trusted users only
-- Users without this role cannot modify custom commands
-
-For complete command documentation, see [Bot Commands Reference](commands.md).
+- Users without this role cannot modify custom commands or threads
