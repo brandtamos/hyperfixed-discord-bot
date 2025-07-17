@@ -35,13 +35,10 @@ A Discord bot that tracks bullying statistics, converts temperatures, displays t
    npm start
    ```
 
-## Testing
-
-Run the automated tests to ensure all functionality is working correctly:
-
-```bash
-npm test
-```
+6. (Optional) Run automated tests to ensure all functionality is working correctly:
+   ```bash
+   npm test
+   ```
 
 ## Configuration
 

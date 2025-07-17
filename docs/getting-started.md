@@ -15,17 +15,6 @@ npm start
 If you encounter errors:
 > **Tip:** Ensure your environment variables are correctly set. See [Configuration Guide](configuration.md) for details.
 
-## Running Tests
-
-After making changes, it's a good practice to run the automated tests to ensure
-everything is working as expected.
-
-```bash
-npm test
-```
-
-This will run all the unit tests for the bot.
-
 ## Prerequisites
 - Node.js 16+ installed
 - Discord bot token (see [Discord Setup Guide](discord-setup.md))
@@ -38,6 +27,17 @@ After starting the bot, test these commands in your Discord server:
 - Add/remove reactions on your pronoun message to test role assignment
 
 For complete command documentation, see [Bot Commands Reference](commands.md).
+
+## Unit Tests
+
+After making changes, it's a good practice to run the automated tests to ensure
+everything is working as expected.
+
+```bash
+npm test
+```
+
+This will run all the unit tests for the bot.
 
 ## Troubleshooting
 
