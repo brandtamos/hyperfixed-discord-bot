@@ -35,6 +35,11 @@ A Discord bot that tracks bullying statistics, converts temperatures, displays t
    npm start
    ```
 
+6. (Optional) Run automated tests to ensure all functionality is working correctly:
+   ```bash
+   npm test
+   ```
+
 ## Configuration
 
 Set the following environment variables in your `.env` file:

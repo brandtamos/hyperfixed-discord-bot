@@ -28,6 +28,17 @@ After starting the bot, test these commands in your Discord server:
 
 For complete command documentation, see [Bot Commands Reference](commands.md).
 
+## Unit Tests
+
+After making changes, it's a good practice to run the automated tests to ensure
+everything is working as expected.
+
+```bash
+npm test
+```
+
+This will run all the unit tests for the bot.
+
 ## Troubleshooting
 
 ### Common Issues
