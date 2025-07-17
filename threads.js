@@ -1,17 +1,4 @@
-const storage = require('node-persist');
-
-let threadList = [];
-
-// load threads into memory on app start
-const loadThreads = async function(){
-    await storage.init({dir: 'storage'});
-
-    let storedThreads = await storage.getItem("storedThreads");
-    if (typeof storedThreads != 'undefined'){
-        threadList = storedThreads;
-    }
-}
-loadThreads();
+const threadsManager = require('./threadsManager');
 
 /* adds a new thread into the list for the channel where
  * the command is typed
@@ -68,13 +55,10 @@ async function add(msg) {
       description: threadDescription
     };
 
-    let threadExists = threadList.some(t => t.threadID == threadID);
-    if(threadExists){
-      msg.client.users.send(msg.author.id, "<#" + threadID + "> is already in the list for this channel.");
+    if (await threadsManager.addThread(threadObject)) {
+        msg.reply("<#" + threadID + "> has been successfully **added** to the list for this channel!");
     } else {
-      threadList.push(threadObject);
-      await storage.setItem("storedThreads", threadList);
-      msg.reply("<#" + threadID + "> has been successfully **added** to the list for this channel!");
+        msg.client.users.send(msg.author.id, "<#" + threadID + "> is already in the list for this channel.");
     }
 
     } catch(error) {
@@ -96,7 +80,7 @@ async function remove(msg) {
       error = "No thread id provided."
     }
 
-    if (threadID != undefined && !threadList.some(t => t.threadID == threadID)) {
+    if (threadID != undefined && !threadsManager.getThreads().some(t => t.threadID == threadID)) {
       threadID = threadID.trim()
       threadObj = msg.channel.threads.cache.find(c => c.name == threadID);
       threadID = threadObj.id;
@@ -111,13 +95,10 @@ async function remove(msg) {
       return
     }
     
-    let modifiedThreadList = threadList.filter(t => t.threadID != threadID);
-    threadList = modifiedThreadList;
-
-    await storage.setItem("storedThreads", threadList);
-
-    const response = "<#" + threadID + "> has been successfully **removed** from the list for this channel!"
-    msg.reply(response);
+    if (await threadsManager.removeThread(threadID)) {
+        const response = "<#" + threadID + "> has been successfully **removed** from the list for this channel!"
+        msg.reply(response);
+    }
 
   } catch(error) {
     console.error(error);
@@ -128,7 +109,7 @@ async function remove(msg) {
  */
 async function list(msg) {
   try {
-    const allThreads = threadList 
+    const allThreads = threadsManager.getThreads()
       .map(t => `<#${t.threadID}> - ${t.description}`)
       .join("\n");
 
