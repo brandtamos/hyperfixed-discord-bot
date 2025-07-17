@@ -15,6 +15,17 @@ npm start
 If you encounter errors:
 > **Tip:** Ensure your environment variables are correctly set. See [Configuration Guide](configuration.md) for details.
 
+## Running Tests
+
+After making changes, it's a good practice to run the automated tests to ensure
+everything is working as expected.
+
+```bash
+npm test
+```
+
+This will run all the unit tests for the bot.
+
 ## Prerequisites
 - Node.js 16+ installed
 - Discord bot token (see [Discord Setup Guide](discord-setup.md))
