@@ -142,7 +142,10 @@ A: Currently, support is provided through GitHub issues and documentation. Or yo
 ## Easter Eggs
 
 ### Q: What's the Weezer thing about?
-A: I've never heard of Weezer, could you be more specific? 
+A: I've never heard of Weezer, could you be more specific?
+
+### Q: What's a blump?
+A: Wouldn't you like to know.
 
 ### Q: Are there other hidden features?
 A: The bully tracking system has some fun letter replacement features. Try different `!*ully` commands and see what happens!

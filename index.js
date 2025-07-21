@@ -32,6 +32,12 @@ const emojiToRoleMap = new Map([
     ['pronoun_any', process.env.ROLE_PRONOUN_ANY],
   ]);
 
+/** @type {Map<string,string>} Maps words to their joke corrections */
+const wordToCorrectionMap = new Map([
+    ['weezer', 'Weeer'],
+    ['blimp', 'blump']
+  ]);
+
 //init storage
 /** @type {Array<Object>} Array of custom command objects loaded from storage */
 let commandList = [];
@@ -110,10 +116,13 @@ client.on("messageCreate", async msg => {
             break;
     }
 
-    //the weezer joke
-    const weezerRegex = /\b[^\w\s]*weezer[^\w\s]*\b/i;
-    if(weezerRegex.test(msg.content)){
-        msg.channel.send('*Weeer');
+    let correctionResponse = "";
+    const regex = new RegExp(`\\b[^\\w\\s]*(${Array.from(wordToCorrectionMap.keys()).join("|")})[^\\w\\s]*\\b`, 'ig');
+    for(const match of msg.content.matchAll(regex)){
+        correctionResponse += `*${wordToCorrectionMap.get(match[0].toLowerCase())}\n`;
+    }
+    if(correctionResponse){
+        msg.channel.send(correctionResponse)
     }
 });
 

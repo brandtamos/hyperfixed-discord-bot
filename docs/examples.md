@@ -150,6 +150,16 @@ Bot: *Weeer
 
 The bot responds to any variation of "weezer" in any message (case-insensitive).
 
+### Blimp Detection
+
+**Trigger the Blimp response:**
+```
+User: Did you know I flew the Goodyear blimp?
+Bot: *blump
+```
+
+The bot responds to any variation of "blimp" in any message (case-insensitive).
+
 ## Time Zone Examples
 
 ### Viewing Current Time

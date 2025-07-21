@@ -80,6 +80,7 @@ Requires the "MOD" role:
 - **Distance conversion** - Automatically converts between kilometers and miles when distances are mentioned
 - **Pronoun roles** - Assigns roles based on emoji reactions to the configured message
 - **Weezer detection** - Responds to Weezer mentions
+- **Blimp detection** - Responds to Blimp mentions
 
 ## File structure
 
