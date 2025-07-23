@@ -80,7 +80,7 @@ Bot automatically detects and converts temperature values (°F ↔ °C) mentione
 Bot responds with "*Weeer" when "weezer" is mentioned in any message (what's with these homies dissing my bot?).
 
 ### Blimp Detection
-Bot responds with "*blump" when "blimp" is mentioned in any message.
+Bot responds with "*blump(s)" when "blimp(s)" is mentioned in any message.
 
 ## Custom Configured Commands
 
