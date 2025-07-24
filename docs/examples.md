@@ -156,9 +156,12 @@ The bot responds to any variation of "weezer" in any message (case-insensitive).
 ```
 User: Did you know I flew the Goodyear blimp?
 Bot: *blump
+
+User: How many blimps are there still?
+Bot: *blumps
 ```
 
-The bot responds to any variation of "blimp" in any message (case-insensitive).
+The bot responds to any variation of "blimp(s)" in any message (case-insensitive).
 
 ## Time Zone Examples
 

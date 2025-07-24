@@ -35,7 +35,8 @@ const emojiToRoleMap = new Map([
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
     ['weezer', 'Weeer'],
-    ['blimp', 'blump']
+    ['blimp', 'blump'],
+    ['blimps', 'blumps'],
   ]);
 
 //init storage
