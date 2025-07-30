@@ -26,6 +26,8 @@ const unitMap = {
   fahrenheit: 'F'
 };
 
+console.log(Object.keys(unitMap));
+
 const conversions = {
   km: value => value * 0.621371,  // to miles
   m: value => value * 3.28084,    // to feet
@@ -49,19 +51,7 @@ const conversionUnit = {
   F: "C"
 };
 
-// this is what we look for in the regexp
-const units = [
-  'km', 'kilometer', 'kilometers',
-  'mi', 'mile', 'miles',
-  'm', 'meter', 'meters',
-  'cm', 'centimeter', 'centimeters',
-  'in', 'inch', 'inches',
-  'ft', 'foot', 'feet',
-  'c', 'celsius',
-  'f', 'fahrenheit'
-];
-
-const unitPattern = units
+const unitPattern = Object.keys(unitMap)
   .map(unit => unit.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')) // escape special characters
   .sort((a, b) => b.length - a.length) // longest first to avoid partial matches
   .join('|');
