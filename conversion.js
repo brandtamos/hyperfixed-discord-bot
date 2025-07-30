@@ -26,8 +26,6 @@ const unitMap = {
   fahrenheit: 'F'
 };
 
-console.log(Object.keys(unitMap));
-
 const conversions = {
   km: value => value * 0.621371,  // to miles
   m: value => value * 3.28084,    // to feet
@@ -60,8 +58,6 @@ const regexp = new RegExp(
   `(?<=^|\\s)(-?\\d+(?:\\.\\d+)?)(?:\\s)?(${unitPattern})(?=\\s|$|[.,;!?:])`,
   'gi'
 );
-
-console.log(regexp);
 
 function extractAndConvert(text) {
   const matches = [...text.matchAll(regexp)];
