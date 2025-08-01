@@ -9,6 +9,7 @@ const unitMap = {
   cm: 'cm',
   centimeter: 'cm',
   centimeters: 'cm',
+  '°c': 'C',
   c: 'C',
   celsius: 'C',
 
@@ -22,6 +23,7 @@ const unitMap = {
   in: 'in',
   inch: 'in',
   inches: 'in',
+  '°f': 'F',
   f: 'F',
   fahrenheit: 'F'
 };
