@@ -44,11 +44,11 @@ const conversionUnit = {
   km: "mi",
   m: "ft",
   cm: "in",
-  C: "F",
+  C: "°F",
   mi: "km",
   ft: "m",
   in: "cm",
-  F: "C"
+  F: "°C"
 };
 
 const unitPattern = Object.keys(unitMap)
