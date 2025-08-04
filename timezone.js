@@ -7,6 +7,7 @@ function generateTimezoneString(rightAboutNow) {
   const regina = rightAboutNow.setZone("America/Regina");
   const fargo = rightAboutNow.setZone("America/Chicago");
   const charleston = rightAboutNow.setZone("America/New_York");
+  const edinburgh = rightAboutNow.setZone("Europe/London");
   const sthlm = rightAboutNow.setZone("Europe/Stockholm");
   const perth = rightAboutNow.setZone("Australia/Perth")
   const sydney = rightAboutNow.setZone("Australia/Sydney");
@@ -16,6 +17,7 @@ function generateTimezoneString(rightAboutNow) {
   responseMessage += "\n**Regina**: " + regina.toFormat(format);
   responseMessage += "\n**Fargo**: " + fargo.toFormat(format);
   responseMessage += "\n**Charleston**: " + charleston.toFormat(format);
+  responseMessage += "\n**Edinburgh**: " + edinburgh.toFormat(format);
   responseMessage += "\n**Stockholm**: " + sthlm.toFormat(format);
   responseMessage += "\n**Perth**: " + perth.toFormat(format);
   responseMessage += "\n**Sydney**: " + sydney.toFormat(format);
