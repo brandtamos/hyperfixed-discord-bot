@@ -48,11 +48,10 @@ describe('threads', () => {
             await threads.add(mockMsg);
             expect(threadsManager.addThread).toHaveBeenCalledWith({
                 channelID: 'channel-123',
-                // Un-trimmed spaces when adding threads is an existing feature.
-                threadID: '12345 ',
+                threadID: '12345',
                 description: 'Test Thread',
             });
-            expect(mockMsg.reply).toHaveBeenCalledWith('<#12345 > has been successfully **added** to the list for this channel!');
+            expect(mockMsg.reply).toHaveBeenCalledWith('<#12345> has been successfully **added** to the list for this channel!');
         });
     });
 
