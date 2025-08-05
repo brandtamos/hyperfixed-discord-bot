@@ -1,7 +1,6 @@
 const { Client } = require('discord.js');
 const index = require('./index');
-const temperature = require('./temperature');
-const distance = require('./distance');
+const conversion = require('./conversion');
 const bully = require('./bully');
 const threads = require('./threads');
 const timezone = require('./timezone');
@@ -37,8 +36,7 @@ jest.mock('discord.js', () => {
     };
 });
 
-jest.mock('./temperature', () => ({ messageHasTemps: jest.fn(), convertTemps: jest.fn() }));
-jest.mock('./distance', () => ({ messageHasDistance: jest.fn(), convertDistance: jest.fn() }));
+jest.mock('./conversion', () => ({ make: jest.fn() }));
 jest.mock('./bully', () => ({ bullyHasHappened: jest.fn(), getLeaderboard: jest.fn() }));
 jest.mock('./threads', () => ({ add: jest.fn(), remove: jest.fn(), list: jest.fn() }));
 jest.mock('./timezone', () => ({ now: jest.fn() }));
@@ -60,20 +58,12 @@ describe('index.js', () => {
         };
     });
 
-    it('should call convertTemps when message has temps', () => {
+    it('should call conversion.make when message has units', () => {
         mockMsg.content = 'It is 20C outside.';
-        temperature.messageHasTemps.mockReturnValue(true);
+        conversion.make.mockReturnValue('20 C = 68 F\n');
         const messageCreateCallback = client.getOnCallback('messageCreate');
         messageCreateCallback(mockMsg);
-        expect(temperature.convertTemps).toHaveBeenCalledWith(mockMsg.content);
-    });
-
-    it('should call convertDistances when message has distances', () => {
-        mockMsg.content = 'It is 20km away.';
-        distance.messageHasDistance.mockReturnValue(true);
-        const messageCreateCallback = client.getOnCallback('messageCreate');
-        messageCreateCallback(mockMsg);
-        expect(distance.convertDistance).toHaveBeenCalledWith(mockMsg.content);
+        expect(conversion.make).toHaveBeenCalledWith(mockMsg.content);
     });
 
     it('should call bully.bullyHasHappened for bully commands', async () => {

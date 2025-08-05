@@ -8,12 +8,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,
 
 require('dotenv').config();
 const storage = require('node-persist');
-const temperature = require('./temperature.js');
-const distance = require('./distance.js');
 const bully = require('./bully.js');
 const threads = require('./threads.js');
 const timezone = require('./timezone.js');
-
+const conversion = require('./conversion.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -72,11 +70,14 @@ function isBullyCommand(command) {
 //listen for messages
 client.on("messageCreate", async msg => {
 
-    //ignore messages from bots, including self
+    // ignore messages from bots, including self
     if (msg.author.bot) return;
 
-    convertTemps(msg);
-    convertDistances(msg);
+    /*
+     * catches any units setup for conversion through 
+     * conversion.js and converts them
+     */
+    convertUnits(msg);
 
     const command = msg.content.split(" ")[0].toLowerCase();
 
@@ -237,36 +238,19 @@ function userIsMod(msg){
     return msg.member.roles.cache.find(r => r.name === "MOD")
 }
 
-function convertTemps(msg){
-    try{
-        const messageText = msg.content;
+function convertUnits(msg){
+  try {
+    const messageText = msg.content;
+    const responseMessage = conversion.make(messageText);
 
-        if(temperature.messageHasTemps(messageText) == true){
-            const responseMessage = temperature.convertTemps(messageText);
-            msg.channel.send(responseMessage);
-        }
+    if(responseMessage.length > 0) {
+      msg.channel.send(responseMessage);
     }
-    catch(error){
-        console.error('Failed to convert temperature values');
-        return;
-    }
-    
-}
-
-function convertDistances(msg){
-    try{
-        const messageText = msg.content;
-
-        if(distance.messageHasDistance(messageText) == true){
-            const responseMessage = distance.convertDistance(messageText);
-            msg.channel.send(responseMessage);
-        }
-    }
-    catch(error){
-        console.error('Failed to convert distance values', error);
-        return;
-    }
-    
+  }
+  catch(error) {
+    console.error('Unit conversion failed');
+    return;
+  }
 }
 
 //read message reactions
