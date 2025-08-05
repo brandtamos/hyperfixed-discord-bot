@@ -38,7 +38,7 @@ const unitMap = {
   lb: 'lb',
   lbs: 'lb',
   pound: 'lb',
-  pounds: 'lb'
+  pounds: 'lb',
 };
 
 const conversions = {
@@ -53,7 +53,7 @@ const conversions = {
   g: value => value * 0.035,      // to ounces
   kg: value => value * 2.2046,    // to pounds
   oz: value => value * 28.35,     // to grams
-  lb: value => value / 2.2046     // to kilograms
+  lb: value => value / 2.2046,    // to kilograms
 };
 
 // units that we are converting to
@@ -69,7 +69,7 @@ const conversionUnit = {
   g: "oz",
   kg: "lb",
   oz: "g",
-  lb: "kg"
+  lb: "kg",
 };
 
 const unitPattern = Object.keys(unitMap)
@@ -112,4 +112,7 @@ function make(text) {
   return message
 };
 
-exports.make = make
+exports.make = make;
+exports.unitMap = unitMap;
+exports.conversions = conversions;
+exports.conversionUnit = conversionUnit;

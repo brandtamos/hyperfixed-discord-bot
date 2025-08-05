@@ -1,4 +1,4 @@
-const { make } = require('./conversion');
+const { make, unitMap, conversions, conversionUnit } = require('./conversion');
 
 describe('conversion unit tests', () => {
   it('should correctly convert units', () => {
@@ -37,5 +37,16 @@ describe('conversion unit tests', () => {
   it('should not use fp precision if not necessary', () => {
     expect(make('20 km')).toBe('20 km = 12.43 mi\n');
     expect(make('20 mi')).toBe('20 mi = 32.19 km\n');
+  });
+
+  it('should have a conversion for every unit defined', () => {
+    const units = new Set(Object.values(unitMap));
+    for (const unit of units) {
+      // Check the conversion functions
+      expect(conversions).toHaveProperty(unit);
+      expect(typeof conversions[unit]).toBe('function');
+      // Check the target units
+      expect(conversionUnit).toHaveProperty(unit);
+    }
   });
 });
