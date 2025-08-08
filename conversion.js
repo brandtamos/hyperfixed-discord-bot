@@ -78,7 +78,7 @@ const unitPattern = Object.keys(unitMap)
   .join('|');
 
 const regexp = new RegExp(
-  `(?<=^|\\s)(-?\\d+(?:\\.\\d+)?)(?:\\s)?(${unitPattern})(?=\\s|$|[.,;!?:])`,
+  `(?<!\\w)(-?\\d+(?:\\.\\d+)?)(?:\\s)?(${unitPattern})\\b`,
   'gi'
 );
 
