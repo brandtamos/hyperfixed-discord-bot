@@ -39,6 +39,17 @@ describe('conversion unit tests', () => {
     expect(make('20 mi')).toBe('20 mi = 32.19 km\n');
   });
 
+  it('should handle symbolically coddled expressions', () => {
+    expect(make('~2.5 meters')).toBe('2.5 m = 8.2 ft\n');
+    expect(make('2.5 meters)')).toBe('2.5 m = 8.2 ft\n');
+    expect(make('(~2.5 meters)')).toBe('2.5 m = 8.2 ft\n');
+    expect(make('*2.5 meters*')).toBe('2.5 m = 8.2 ft\n');
+    expect(make('*-2.5 meters*')).toBe('-2.5 m = -8.2 ft\n');
+    expect(make('`-2.5 meters`')).toBe('-2.5 m = -8.2 ft\n');
+    expect(make('-2.5 meters?')).toBe('-2.5 m = -8.2 ft\n');
+    expect(make('-2.5 meters:')).toBe('-2.5 m = -8.2 ft\n');
+  });
+
   it('should have a conversion for every unit defined', () => {
     const units = new Set(Object.values(unitMap));
     for (const unit of units) {
