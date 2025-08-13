@@ -151,12 +151,6 @@ function getSecretMenuCommands(){
     return secretMenuCommandList;
 }
 
-//exports.checkForCommand = checkForCommand;
-//exports.addCommand = addCommand;
-//exports.removeCommand = removeCommand;
-//module.exports = commandList;
-//module.exports = secretMenuCommandList;
-
 module.exports = {
     CommandType,
     checkForCommand,
