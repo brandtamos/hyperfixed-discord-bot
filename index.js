@@ -12,6 +12,7 @@ const bully = require('./bully.js');
 const threads = require('./threads.js');
 const timezone = require('./timezone.js');
 const conversion = require('./conversion.js');
+const commands = require('./commands.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -37,9 +38,7 @@ const wordToCorrectionMap = new Map([
     ['blimps', 'blumps'],
   ]);
 
-//init storage
-/** @type {Array<Object>} Array of custom command objects loaded from storage */
-let commandList = [];
+
 
 /**
  * Initializes the bot's persistent storage and loads existing commands
@@ -50,11 +49,6 @@ let commandList = [];
 const start = async function(){
     await storage.init({dir: 'storage'});
 
-    //load commands into memory on app start
-    let storedCommands = await storage.getItem("storedCommands");
-    if (typeof storedCommands != 'undefined'){
-        commandList = storedCommands;
-    }
 }
 start();
 
@@ -81,7 +75,7 @@ client.on("messageCreate", async msg => {
 
     const command = msg.content.split(" ")[0].toLowerCase();
 
-    checkForCommand(msg, command);
+    commands.checkForCommand(msg, command);
 
     if(isBullyCommand(command)){
         // switch doesn't deal well with wildcard matching so first check for a *ully command
@@ -93,6 +87,9 @@ client.on("messageCreate", async msg => {
         case "!help":
             postHelp(msg);
             break;
+        case "!secretmenu":
+            postSecretMenu(msg);
+            break;
         case "!bullyleaderboard":
             bully.getLeaderboard(msg);
             break;
@@ -100,10 +97,16 @@ client.on("messageCreate", async msg => {
             timezone.now(msg);
             break;
         case "!addcommand":
-            if(userIsMod(msg)) await addCommand(msg);
+            if(userIsMod(msg)) await commands.addCommand(msg, commands.CommandType.STANDARD);
             break;
         case "!removecommand":
-            if(userIsMod(msg)) await removeCommand(msg);
+            if(userIsMod(msg)) await commands.removeCommand(msg, commands.CommandType.STANDARD);
+            break;
+        case "!addsecretmenucommand":
+            if(userIsMod(msg)) await commands.addCommand(msg, commands.CommandType.SECRETMENU);
+            break;
+        case "!removesecretmenucommand":
+            if(userIsMod(msg)) await commands.removeCommand(msg, commands.CommandType.SECRETMENU);
             break;
         case "!addthread":
             if(userIsMod(msg)) await threads.add(msg);
@@ -134,13 +137,12 @@ client.on("messageCreate", async msg => {
  */
 function postHelp(msg){
     let response = '`!help` - display this message\n' +
-        '`!bully` - use this any time brandtamos is bullied\n' +
-        '`!bullyleaderboard` - show the current bullying leaderboard\n' +
         '`!time` - show the current time in Hyperfixed population centers\n'+
         '`!threads` - shows all bookmarked threads on the server\n';
 
 
     //populate the rest of the help list from stored commands
+    let commandList = commands.getStandardCommands();
     commandList.forEach((command) => {
         let newHelpLine = "`" + command.command + "` - " + command.description + "\n";
         response = response + newHelpLine;
@@ -149,84 +151,20 @@ function postHelp(msg){
 }
 
 /**
- * Adds a new custom command with description and output text
- * @async
- * @param {import('discord.js').Message} msg - Discord message invoking command
- * @returns {Promise<void>}
- */
-async function addCommand(msg){
-    try{
-        if(!msg.content.includes("|")){
-            msg.reply("Sorry, I didn't understand that! Make sure your request is formatted in the form of:\n`!addcommand commmandName commandDescription | commandOutput`");
-            return;
-        }
-        let splitMessage = msg.content.split(" ");
-        let newCommand = splitMessage[1].toLowerCase();
-        if(newCommand.charAt(0) != '!'){
-            newCommand = "!" + newCommand;
-        }
-
-        //trim off commands to get just the text we need
-        splitMessage.shift();
-        splitMessage.shift();
-
-
-        let rejoinedText = splitMessage.join(" ");
-        let commandDescription = rejoinedText.split("|")[0];
-        let commandText = rejoinedText.split("|")[1];
-        let commandObject = {
-            command: newCommand,
-            description: commandDescription,
-            commandText: commandText
-        };
-
-        let commandExists = commandList.some(command => command.command == newCommand);
-        if(commandExists){
-            msg.reply("Command `" + newCommand + "` already exists.");
-        }
-        else{
-            commandList.push(commandObject);
-            await storage.setItem("storedCommands", commandList);
-            msg.reply("Command `" + newCommand + "` has been successfully added!");
-        }
-    }
-    catch(error){
-        msg.reply("I'm sorry, something went wrong trying to add a new command!");
-    }
-}
-
-/**
- * Removes an existing custom command
- * @async
- * @param {import('discord.js').Message} msg - Discord message invoking command
- * @returns {Promise<void>}
- */
-async function removeCommand(msg){
-    let commandToRemove = msg.content.split(" ")[1].toLowerCase();
-    if(commandToRemove.charAt(0) != '!'){
-        commandToRemove = "!" + commandToRemove;
-    }
-
-    console.log(commandToRemove);
-
-    let modifiedCommandList = commandList.filter(commandObj => commandObj.command != commandToRemove);
-    commandList = modifiedCommandList;
-
-    await storage.setItem("storedCommands", commandList);
-
-    msg.reply("Command " + commandToRemove +  " has been removed!");
-}
-
-/**
- * Checks if a command exists in storage and executes it
+ * Displays the secret menu commands
  * @param {import('discord.js').Message} msg - Discord message object
- * @param {string} command - The command to check for
  */
-function checkForCommand(msg, command){
-    let commandObject = commandList.find(commandObj => commandObj.command == command);
-    if(commandObject){
-        msg.channel.send(commandObject.commandText);
-    }
+function postSecretMenu(msg){
+
+    let response = '`!bully` - use this any time brandtamos is bullied\n' +
+        '`!bullyleaderboard` - show the current bullying leaderboard\n';
+
+    let secretMenuCommands = commands.getSecretMenuCommands();
+    secretMenuCommands.forEach((command) => {
+        let newSecretMenuLine = "`" + command.command + "` - " + command.description + "\n";
+        response = response + newSecretMenuLine;
+    });
+    msg.channel.send(response);
 }
 
 /**
