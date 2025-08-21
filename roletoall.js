@@ -1,3 +1,5 @@
+const { ThreadAutoArchiveDuration } = require('discord.js');
+
 function getRoleFromCommand(msg) {
   return msg.content.split(/\s+/).slice(1).join(" ");
 }
@@ -62,13 +64,13 @@ async function addRoleToAllCommand(msg, role, giveRole) {
     roleName = getRoleName(msg, roleId);
     
     if (await addRoleToAll(msg, roleId, giveRole)) {
-      if (giveRole) msg.channel.send(`Finnished adding the role [${roleName}] to all server members.`);
-      if (!giveRole) msg.channel.send(`DRY RUN: Finnished adding the role [${roleName}] to all server members.`);
+      if (giveRole) msg.channel.send(`Finnished adding the role \`${roleName}\` to all server members.`);
+      if (!giveRole) msg.channel.send(`DRY RUN: Finnished adding the role \`${roleName}\` to all server members.`);
       return
     };
   }
   
-  msg.channel.send(`Something went wrong, failed to add role. Make sure that [${role}] is a role.`)
+  msg.channel.send(`Something went wrong, failed to add role. Make sure that \`${role}\` is a role.`)
 }
 
 /* 
@@ -104,15 +106,71 @@ async function removeRoleFromAllCommand(msg, role, removeRole) {
   if (roleId) {
     roleName = getRoleName(msg, roleId);
     if (await removeRoleFromAll(msg, roleId, removeRole)) {
-      if (removeRole) msg.channel.send(`Finnished removing the role [${roleName}] from all server members.`);
-      if (!removeRole) msg.channel.send(`DRY RUN: Finnished removing the role [${roleName}] from all server members.`);
+      if (removeRole) msg.channel.send(`Finnished removing the role \`${roleName}\` from all server members.`);
+      if (!removeRole) msg.channel.send(`DRY RUN: Finnished removing the role \`${roleName}\` from all server members.`);
       return
     };
   }
 
-  msg.channel.send(`Something went wrong, failed to remove role. Make sure that [${role}] is a role.`)
+  msg.channel.send(`Something went wrong, failed to remove role. Make sure that \`${role}\` is a role.`)
+}
+
+function listUsersWithoutRole(msg, roleId) {
+ 
+  const users = [];
+
+  msg.guild.members.cache.forEach(m => {
+     if (!m.roles.cache.find(r => r.id === roleId)){
+       users.push({ id: m.user.id, 
+                    name: m.user.username
+      });
+     } 
+  });
+
+  return users;
+}
+
+async function listUsersWithoutRoleCommand(msg, role) {
+  roleId = getRoleId(msg, role);
+  
+  if(roleId) {
+    users = listUsersWithoutRole(msg, roleId);
+
+    if(users.length > 0) {
+      const thread = await msg.channel.threads.create({
+	      name: `Users without the \`${getRoleName(msg, roleId)}\` role`,
+	      autoArchiveDuration: ThreadAutoArchiveDuration.OneHour,
+      });
+
+      // some acrobatics to handle the max message length of 
+      // 2000 chars
+      const messageCharacterLimit = 2000;
+      const messages =[];
+      let message = '';
+
+      users.forEach(u => {
+        newLine = `${u.name} [${u.id}]\n`;
+        if((message + newLine).length > messageCharacterLimit) {
+          messages.push(message);
+          message = '';
+        }
+        message += newLine;
+      }); 
+      // push whatever is in messages that has not 
+      // been put on the list
+      messages.push(message);
+      
+      // send all the messages
+      await messages.forEach(m => { thread.send(m) });
+    } else {
+      msg.channel.send(`All users have the role \`${getRoleName(msg,roleId)}\``);
+    }
+  } else {
+    msg.channel.send(`Something went wrong. Is \`${role}\` really a role?`);
+  }
 }
 
 exports.getRoleFromCommand = getRoleFromCommand;
 exports.addRoleToAllCommand = addRoleToAllCommand;
 exports.removeRoleFromAllCommand = removeRoleFromAllCommand;
+exports.listUsersWithoutRoleCommand = listUsersWithoutRoleCommand;

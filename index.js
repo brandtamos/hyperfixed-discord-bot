@@ -140,6 +140,11 @@ client.on("messageCreate", async msg => {
                 await roletoall.removeRoleFromAllCommand(msg, role, true);
             }
             break;
+        case "!usersworole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.listUsersWithoutRoleCommand(msg, role); 
+            }
         default:
             break;
     }
