@@ -13,6 +13,7 @@ const threads = require('./threads.js');
 const timezone = require('./timezone.js');
 const conversion = require('./conversion.js');
 const commands = require('./commands.js');
+const roletoall = require('./roletoall.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -37,8 +38,6 @@ const wordToCorrectionMap = new Map([
     ['blimp', 'blump'],
     ['blimps', 'blumps'],
   ]);
-
-
 
 /**
  * Initializes the bot's persistent storage and loads existing commands
@@ -73,7 +72,7 @@ client.on("messageCreate", async msg => {
      */
     convertUnits(msg);
 
-    const command = msg.content.split(" ")[0].toLowerCase();
+    const command = msg.content.split(/\s+/)[0].toLowerCase();
 
     commands.checkForCommand(msg, command);
 
@@ -117,6 +116,35 @@ client.on("messageCreate", async msg => {
         case "!threads":
             threads.list(msg);
             break;
+        case "!dryaddrole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.addRoleToAllCommand(msg, role, false);
+            }
+            break;
+        case "!addrole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.addRoleToAllCommand(msg, role, true);
+            }
+            break;
+        case "!dryremoverole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.removeRoleFromAllCommand(msg, role, false);
+            }
+            break;
+        case "!removerole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.removeRoleFromAllCommand(msg, role, true);
+            }
+            break;
+        case "!usersworole":
+            if(userIsMod(msg)) {
+                role = roletoall.getRoleFromCommand(msg);
+                await roletoall.listUsersWithoutRoleCommand(msg, role); 
+            }
         default:
             break;
     }
