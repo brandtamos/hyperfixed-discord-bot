@@ -166,7 +166,8 @@ client.on("messageCreate", async msg => {
 function postHelp(msg){
     let response = '`!help` - display this message\n' +
         '`!time` - show the current time in Hyperfixed population centers\n'+
-        '`!threads` - shows all bookmarked threads on the server\n';
+        '`!threads` - shows all bookmarked threads on the server\n'+
+        '`!secretmenu` - show the secret menu of silly commands\n';
 
 
     //populate the rest of the help list from stored commands
