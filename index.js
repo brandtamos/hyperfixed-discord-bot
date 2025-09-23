@@ -37,6 +37,7 @@ const wordToCorrectionMap = new Map([
     ['weezer', 'Weeer'],
     ['blimp', 'blump'],
     ['blimps', 'blumps'],
+    ['skateboard', 'skamtbord']
   ]);
 
 /**
