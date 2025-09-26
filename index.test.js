@@ -93,4 +93,11 @@ describe('index.js', () => {
         await messageCreateCallback(mockMsg);
         expect(threads.list).toHaveBeenCalledWith(mockMsg);
     });
+
+    it('should correctly substitute words from complex strings', async () => {
+        mockMsg.content = 'alt=":weezer:"';
+        const messageCreateCallback = client.getOnCallback('messageCreate');
+        await messageCreateCallback(mockMsg);
+        expect(mockMsg.channel.send).toHaveBeenCalledWith('*Weeer\n');
+    });
 });

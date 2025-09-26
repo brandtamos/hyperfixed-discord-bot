@@ -153,7 +153,7 @@ client.on("messageCreate", async msg => {
     let correctionResponse = "";
     const regex = new RegExp(`\\b[^\\w\\s]*(${Array.from(wordToCorrectionMap.keys()).join("|")})[^\\w\\s]*\\b`, 'ig');
     for(const match of msg.content.matchAll(regex)){
-        correctionResponse += `*${wordToCorrectionMap.get(match[0].toLowerCase())}\n`;
+        correctionResponse += `*${wordToCorrectionMap.get(match[1].toLowerCase())}\n`;
     }
     if(correctionResponse){
         msg.channel.send(correctionResponse)
