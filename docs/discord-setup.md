@@ -32,7 +32,7 @@ The bot needs the following permissions:
 - **Use External Emojis** - For custom pronoun emojis
 
 ### Permission Integer
-Use permission integer: `268437504` for all required permissions.
+Use permission integer: `268766272` for all required permissions.
 
 ## Step 4: Generate Invite Link
 
