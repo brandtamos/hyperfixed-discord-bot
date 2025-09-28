@@ -6,7 +6,73 @@
 
 **Creating a simple greeting command:**
 ```
+# Usage Examples
+
+## Custom Commands
+
+### Standard Custom Commands
+
+**Creating a simple greeting command:**
+```
 !addcommand hello Simple greeting | Hello there! Welcome to our Discord server! 👋
+```
+
+**Using the command:**
+```
+User: !hello
+Bot: Hello there! Welcome to our Discord server! 👋
+```
+
+### Secret Menu Commands
+
+**Creating a secret command:**
+```
+!addsecretmenucommand ninja Sneaky response | 🥷 You found the secret ninja command!
+```
+
+**Viewing secret commands:**
+```
+!secretmenu
+Bot: `!bully` - use this any time brandtamos is bullied
+`!bullyleaderboard` - show the current bullying leaderboard
+`!ninja` - Sneaky response
+```
+
+### Advanced Custom Commands
+
+**Command with server-specific information:**
+```
+!addcommand rules Server rules | Please read our rules in #rules-channel. Be respectful and have fun!
+```
+
+**Command with formatting:**
+```
+!addcommand invite Server invite | Join our community! Here's the invite: https://discord.gg/example
+```
+
+**Fun response command:**
+```
+!addcommand magic Magic 8-ball response | 🎱 The magic 8-ball says: Ask again later!
+```
+
+### Command Management
+
+**Removing a command:**
+```
+!removecommand hello
+Bot: Command !hello has been removed!
+```
+
+**Viewing all commands:**
+```
+!help
+Bot: `!help` - display this message
+`!time` - show the current time in Hyperfixed population centers
+`!threads` - shows all bookmarked threads on the server
+`!secretmenu` - show the secret menu of silly commands
+`!hello` - Simple greeting
+`!rules` - Server rules
+`!magic` - Magic 8-ball response
 ```
 
 **Using the command:**
@@ -150,18 +216,28 @@ Bot: *Weeer
 
 The bot responds to any variation of "weezer" in any message (case-insensitive).
 
-### Blimp Detection
+### Word Corrections
 
-**Trigger the Blimp response:**
+**Trigger various corrections:**
 ```
+User: I love listening to Weezer!
+Bot: *Weeer
+
 User: Did you know I flew the Goodyear blimp?
 Bot: *blump
+
+User: Check out my new skateboard!
+Bot: *skamtbord
 
 User: How many blimps are there still?
 Bot: *blumps
 ```
 
-The bot responds to any variation of "blimp(s)" in any message (case-insensitive).
+The bot responds to variations of these words (case-insensitive):
+- "weezer" → "*Weeer"
+- "blimp" → "*blump" 
+- "blimps" → "*blumps"
+- "skateboard" → "*skamtbord"
 
 ## Time Zone Examples
 
@@ -176,79 +252,67 @@ The bot responds to any variation of "blimp(s)" in any message (case-insensitive
 ```
 Current time in:
 **Seattle**: Mon 26 Jun 14:30 / 02:30 PM
+**Regina**: Mon 26 Jun 15:30 / 03:30 PM
 **Fargo**: Mon 26 Jun 16:30 / 04:30 PM
 **Charleston**: Mon 26 Jun 17:30 / 05:30 PM
+**Edinburgh**: Mon 26 Jun 22:30 / 10:30 PM
 **Stockholm**: Mon 26 Jun 23:30 / 11:30 PM
+**Perth**: Tue 27 Jun 05:30 / 05:30 AM
 **Sydney**: Tue 27 Jun 07:30 / 07:30 AM
 ```
 
-## Temperature Conversion Examples
+## Unit Conversion Examples
 
-### Automatic Temperature Detection
+### Temperature Conversion
 
-**User mentions temperature:**
+**Automatic temperature detection:**
 ```
 User: It's 75°F outside today!
-Bot: 75°F = 24°C
-```
+Bot: 75 F = 23.89 °C
 
-**Multiple temperatures:**
-```
-User: The forecast shows 32°F tomorrow and 98°F later this week
-Bot: 32°F = 0°C
-98°F = 37°C
-```
-
-**Celsius to Fahrenheit:**
-```
 User: Water boils at 100°C
-Bot: 100°C = 212°F
-```
+Bot: 100 C = 212 °F
 
-**Mixed formats:**
-```
 User: It's 20C here but 85F there
-Bot: 20°C = 68°F
-85°F = 29°C
+Bot: 20 C = 68 °F
+85 F = 29.44 °C
 ```
 
-The bot automatically detects temperature values in various formats:
-- `75°F`, `75F`, `75f`
-- `24°C`, `24C`, `24c`
-- Supports negative temperatures: `-10°C`
-- Supports decimal values: `98.6°F`
+### Distance Conversion
 
-## Distance Conversion Examples
-
-### Automatic Distance Detection
-
-**User mentions distance in kilometers:**
+**Automatic distance detection:**
 ```
 User: The store is 5 km away
 Bot: 5 km = 3.11 mi
-```
 
-**User mentions distance in miles:**
-```
 User: It's about 10 miles to the airport
-Bot: 10 mi = 16 km
+Bot: 10 mi = 16.09 km
+
+User: The pool is 25 meters long
+Bot: 25 m = 82.02 ft
+
+User: I'm 6 feet tall
+Bot: 6 ft = 1.83 m
 ```
 
-**Multiple distances:**
+### Weight Conversion
+
+**Automatic weight detection:**
 ```
-User: The marathon is 42 km but I only ran 3 miles today
-Bot: 42 km = 26 mi
-3 mi = 4.83 km
+User: This package weighs 2.5 kg
+Bot: 2.5 kg = 5.51 lb
+
+User: I need 500 grams of flour
+Bot: 500 g = 17.5 oz
+
+User: The baby weighs 8 pounds
+Bot: 8 lb = 3.63 kg
 ```
 
-**Various formats supported:**
-```
-User: Distance: 100 kilometers, 50 km, 25 miles, 15 mi
-Bot: 100 km = 62 mi
-50 km = 31 mi
-25 mi = 40 km
-15 mi = 24 km
-```
+**Supported conversion formats:**
+- **Temperature**: °F ↔ °C (supports variations: F, f, C, c, fahrenheit, celsius)
+- **Distance**: km ↔ mi, m ↔ ft, cm ↔ in (supports full words: kilometers, miles, meters, feet, etc.)
+- **Weight**: kg ↔ lb, g ↔ oz (supports full words: kilograms, pounds, grams, ounces)
 
 The bot automatically detects distance values in various formats:
 - `5 km`, `5km`, `5 kilometers`, `5 kilometer`
@@ -391,4 +455,87 @@ Solution:
 2. Verify bot can see the channel
 3. Check hosting service status
 4. Review bot logs for errors
+```
+
+## Thread Management Examples
+
+### Adding Bookmarked Threads
+
+**Add thread by ID:**
+```
+!addthread 123456789012345678 | Important discussion about server rules
+Bot: <#123456789012345678> has been successfully **added** to the list for this channel!
+```
+
+**Add thread by name:**
+```
+!addthread "Weekly Discussion" | Our weekly community discussion thread
+Bot: <#987654321098765432> has been successfully **added** to the list for this channel!
+```
+
+### Managing Bookmarked Threads
+
+**Remove a bookmarked thread:**
+```
+!removethread 123456789012345678
+Bot: <#123456789012345678> has been successfully **removed** from the list for this channel!
+```
+
+**List all bookmarked threads:**
+```
+!threads
+Bot: All bookmarked threads on the server:
+<#123456789012345678> - Important discussion about server rules
+<#987654321098765432> - Weekly community discussion
+<#456789012345678901> - Bot suggestions and feedback
+```
+
+## Role Management Examples (MOD only)
+
+### Bulk Role Addition
+
+**Add role to all members:**
+```
+!addrole Member
+Bot: Finnished adding the role `Member` to all server members.
+```
+
+**Preview role addition (dry run):**
+```
+!dryaddrole Verified
+Bot: DRY RUN: Finnished adding the role `Verified` to all server members.
+```
+
+### Bulk Role Removal
+
+**Remove role from all members:**
+```
+!removerole "Old Event"
+Bot: Finnished removing the role `Old Event` from all server members.
+```
+
+**Preview role removal (dry run):**
+```
+!dryremoverole 123456789012345678
+Bot: DRY RUN: Finnished removing the role `Event Participant` from all server members.
+```
+
+### Find Users Missing Roles
+
+**List users without a role:**
+```
+!usersworole Verified
+```
+
+**Bot creates thread: "Users without the `Verified` role"**
+```
+user1 [123456789]
+user2 [234567890]
+user3 [345678901]
+```
+
+**If all users have the role:**
+```
+!usersworole Member
+Bot: All users have the role `Member`
 ```

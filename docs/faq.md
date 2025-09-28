@@ -4,12 +4,14 @@
 
 ### Q: What does this bot do?
 A: The Hyperfixed Discord Bot provides several main features:
-- **Custom Commands**: Create text responses triggered by commands
+- **Custom Commands**: Create text responses triggered by commands (standard and secret menu)
 - **Pronoun Roles**: Automatic role assignment via emoji reactions
 - **Bully Tracking**: Fun statistical tracking for "bully" events with leaderboard
 - **Time Zone Display**: Show current time across multiple global locations
-- **Temperature Conversion**: Automatic Celsius ↔ Fahrenheit conversion for any temperatures mentioned
-- **Easter Eggs**: Weezer detection and other fun responses
+- **Unit Conversion**: Automatic conversion for temperature, distance, and weight measurements
+- **Thread Management**: Bookmark important threads for easy access
+- **Role Management**: Bulk add/remove roles to all server members (MOD only)
+- **Word Corrections**: Fun joke responses to certain words (weezer, blimp, skateboard)
 
 ### Q: Is this bot free to use?
 A: Yes, this is an open-source bot that you can host yourself for free.
@@ -37,7 +39,12 @@ A: Basic familiarity with Discord and following instructions is helpful, but det
 ## Commands & Features
 
 ### Q: Who can create custom commands?
-A: Only users with the "MOD" role can create or remove custom commands using `!addcommand` and `!removecommand`.
+A: Only users with the "MOD" role can create or remove custom commands using:
+- `!addcommand` and `!removecommand` (standard commands)
+- `!addsecretmenucommand` and `!removesecretmenucommand` (secret menu commands)
+
+### Q: What's the difference between standard and secret menu commands?
+A: Standard commands appear in `!help`, while secret menu commands appear in `!secretmenu`. Use secret commands for silly or fun responses that might clutter the main help menu.
 
 ### Q: How many custom commands can I create?
 A: There's no built-in limit, but keep in mind storage and performance considerations.
@@ -46,7 +53,7 @@ A: There's no built-in limit, but keep in mind storage and performance considera
 A: It separates the command description from the actual output. Format: `!addcommand name description | output`
 
 ### Q: Can I use custom commands to give roles?
-A: No, custom commands only send text responses. For roles, use the built-in pronoun reaction system.
+A: No, custom commands only send text responses. For individual role assignment, use the built-in pronoun reaction system. For bulk role management, MOD users can use `!addrole` commands.
 
 ### Q: What bully commands are available?
 A: Any command matching the pattern `!*ully` works (e.g., `!bully`, `!wully`, `!cully`, `!dully`). The bot replaces letters in the output based on the command used.
@@ -62,6 +69,24 @@ A: The `!time` command displays current time in Hyperfixed population centers: S
 
 ### Q: How does the bully leaderboard work?
 A: The `!bullyleaderboard` command shows rankings of users by how many times they've used bully commands, sorted by frequency from highest to lowest.
+
+### Q: How do I bookmark threads?
+A: MOD users can use `!addthread <thread_id_or_name> | <description>` to bookmark threads. Anyone can view bookmarked threads with `!threads`.
+
+### Q: Can I add roles to all server members at once?
+A: Yes! MOD users can use `!addrole <role_name>` to add a role to all members, or `!dryaddrole <role_name>` to preview the operation first.
+
+### Q: How do I find users who don't have a specific role?
+A: MOD users can use `!usersworole <role_name>` which creates a thread listing all users without that role.
+
+### Q: What units does the bot convert automatically?
+A: The bot converts:
+- **Temperature**: °F ↔ °C
+- **Distance**: km ↔ mi, m ↔ ft, cm ↔ in
+- **Weight**: kg ↔ lb, g ↔ oz
+
+### Q: Why does the bot respond "*Weeer" when I mention Weezer?
+A: It's a fun easter egg! The bot also responds to "blimp" with "*blump" and "skateboard" with "*skamtbord".
 
 ## Pronoun Roles
 

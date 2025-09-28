@@ -23,7 +23,10 @@ If you encounter errors:
 ## Quick Test
 After starting the bot, test these commands in your Discord server:
 - `!help` - Shows available commands
+- `!secretmenu` - Shows secret menu commands
+- `!time` - Displays multi-timezone information
 - `!bully` - Tests bully tracking system
+- Try typing a temperature like "72°F" to test unit conversion
 - Add/remove reactions on your pronoun message to test role assignment
 
 For complete command documentation, see [Bot Commands Reference](commands.md).
@@ -51,6 +54,7 @@ This will run all the unit tests for the bot.
 **Permission issues**
 - Ensure the bot has appropriate permissions in Discord
 - Check that bot's role is higher than roles it needs to manage
+- For bulk role commands, bot needs "Manage Roles" permission
 - See [Discord Setup Guide](discord-setup.md) for required permissions
 
 **Bot not responding**

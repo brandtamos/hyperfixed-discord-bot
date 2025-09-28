@@ -1,6 +1,6 @@
 {
   "name": "hyperfixedbot",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "hyperfixing the world",
   "main": "index.js",
   "scripts": {
