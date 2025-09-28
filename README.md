@@ -149,7 +149,4 @@ If you encounter bugs or have suggestions:
 
 1. Check existing issues on GitHub
 2. Create a new issue with:
-   - Clear description of the problem
-   - Steps to reproduce
-   - Bot logs (if relevant)
-   - Your environment (.env values can be redacted)
+   - Y'all know what to do, just brandtampomatic in the disco
