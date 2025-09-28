@@ -174,3 +174,6 @@ A: Wouldn't you like to know.
 
 ### Q: Are there other hidden features?
 A: The bully tracking system has some fun letter replacement features. Try different `!*ully` commands and see what happens!
+
+### Q: What's up with the blimp references? 
+A: Sit down, let me tell you 15 stories about piloting a blump.
