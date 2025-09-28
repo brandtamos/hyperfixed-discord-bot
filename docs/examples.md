@@ -2,14 +2,6 @@
 
 ## Custom Commands
 
-### Creating Your First Command
-
-**Creating a simple greeting command:**
-```
-# Usage Examples
-
-## Custom Commands
-
 ### Standard Custom Commands
 
 **Creating a simple greeting command:**
@@ -70,47 +62,6 @@ Bot: `!help` - display this message
 `!time` - show the current time in Hyperfixed population centers
 `!threads` - shows all bookmarked threads on the server
 `!secretmenu` - show the secret menu of silly commands
-`!hello` - Simple greeting
-`!rules` - Server rules
-`!magic` - Magic 8-ball response
-```
-
-**Using the command:**
-```
-User: !hello
-Bot: Hello there! Welcome to our Discord server! 👋
-```
-
-### Advanced Custom Commands
-
-**Command with server-specific information:**
-```
-!addcommand rules Server rules | Please read our rules in #rules-channel. Be respectful and have fun!
-```
-
-**Command with formatting:**
-```
-!addcommand invite Server invite | Join our community! Here's the invite: https://discord.gg/example
-```
-
-**Fun response command:**
-```
-!addcommand magic Magic 8-ball response | 🎱 The magic 8-ball says: Ask again later!
-```
-
-### Command Management
-
-**Removing a command:**
-```
-!removecommand hello
-Bot: Command !hello has been removed!
-```
-
-**Viewing all commands:**
-```
-!help
-Bot: `!help` - display this message
-`!bully` - use this any time brandtamos is bullied
 `!hello` - Simple greeting
 `!rules` - Server rules
 `!magic` - Magic 8-ball response
@@ -191,32 +142,28 @@ crandtamos has ceen cullied a total of 9 times.
 The record for the longest amount of time crandtamos has not ceen cullied is 5 days, 12 hours, 30 minutes and 15 seconds.
 ```
 
-### Bully Statistics Tracking
+### Bully Leaderboard
 
-The system automatically tracks:
-- **Time since last bully event** - Resets each time any bully command is used
-- **Total bully count** - Increments with each bully command
-- **Longest streak record** - Updates when current streak exceeds previous record
-
-## Easter Eggs
-
-### Weezer Detection
-
-**Trigger the Weezer response:**
+**Viewing the leaderboard:**
 ```
-User: I love listening to Weezer!
-Bot: *Weeer
-
-User: weezer is the best band
-Bot: *Weeer
-
-User: Have you heard the new weezer album?
-Bot: *Weeer
+!bullyleaderboard
 ```
 
-The bot responds to any variation of "weezer" in any message (case-insensitive).
+**Output with multiple users:**
+```
+>>> `alice`: `12`
+`bob`: `8`
+`charlie`: `3`
+`dave`: `1`
+```
 
-### Word Corrections
+**Empty leaderboard:**
+```
+!bullyleaderboard
+Bot: Nobody has bullied yet!
+```
+
+## Word Corrections (Easter Eggs)
 
 **Trigger various corrections:**
 ```
@@ -314,149 +261,6 @@ Bot: 8 lb = 3.63 kg
 - **Distance**: km ↔ mi, m ↔ ft, cm ↔ in (supports full words: kilometers, miles, meters, feet, etc.)
 - **Weight**: kg ↔ lb, g ↔ oz (supports full words: kilograms, pounds, grams, ounces)
 
-The bot automatically detects distance values in various formats:
-- `5 km`, `5km`, `5 kilometers`, `5 kilometer`
-- `10 mi`, `10mi`, `10 miles`, `10 mile`
-- Supports decimal values: `2.5 km`, `1.25 miles`
-- Smart rounding: values under 10 show 2 decimal places, larger values are rounded to whole numbers
-
-## Bully Leaderboard Examples
-
-### Viewing the Leaderboard
-
-**Command:**
-```
-!bullyleaderboard
-```
-
-**Output with multiple users:**
-```
->>> `alice`: `12`
-`bob`: `8`
-`charlie`: `3`
-`dave`: `1`
-```
-
-**Empty leaderboard:**
-```
-!bullyleaderboard
-Bot: Nobody has bullied yet!
-```
-
-## MOD Role Usage
-
-### Setting Up MOD Permissions
-
-1. **Create a Discord role named "MOD"**
-2. **Assign it to trusted users**
-3. **Only users with this role can:**
-   - Create custom commands with `!addcommand`
-   - Remove custom commands with `!removecommand`
-
-### MOD Command Examples
-
-**Successful command creation (user has MOD role):**
-```
-MOD User: !addcommand welcome New member greeting | Welcome to our awesome server! 🎉
-Bot: Command `!welcome` has been successfully added!
-```
-
-**Failed command creation (user lacks MOD role):**
-```
-Regular User: !addcommand test Testing | This is a test
-Bot: (No response - command ignored)
-```
-
-## Server Setup Examples
-
-### Complete Bot Setup Workflow
-
-1. **Initial Discord setup:**
-   - Create bot application
-   - Get bot token
-   - Invite bot to server with proper permissions
-
-2. **Configure environment:**
-   ```ini
-   BOT_TOKEN=your_actual_bot_token_here
-   REACTION_CHANNEL_ID=123456789012345678
-   PRONOUN_REACTION_POST_ID=987654321098765432
-   ROLE_PRONOUN_HE=111111111111111111
-   ROLE_PRONOUN_SHE=222222222222222222
-   ROLE_PRONOUN_THEY=333333333333333333
-   ROLE_PRONOUN_ASK=444444444444444444
-   ROLE_PRONOUN_ANY=555555555555555555
-   ```
-
-3. **Create Discord roles:**
-   - He/Him
-   - She/Her  
-   - They/Them
-   - Ask Me
-   - Any
-   - MOD
-
-4. **Start bot and test:**
-   ```bash
-   npm start
-   ```
-
-5. **Test functionality:**
-   - `!help` - Verify bot responds
-   - `!time` - Test time zone display
-   - `!bully` - Test bully tracking
-   - `!bullyleaderboard` - Test leaderboard
-   - Temperature test - Type "It's 75°F today" to test conversion
-   - Weezer test - Type "weezer" to test easter egg
-   - Reaction test - Add/remove pronoun reactions
-   - MOD test - Create a custom command
-
-### Typical Daily Usage
-
-**Morning server greeting command:**
-```
-!addcommand goodmorning Daily greeting | Good morning everyone! ☀️ Hope you have a wonderful day!
-```
-
-**Server event announcement:**
-```
-!addcommand event Weekly event info | 🎮 Game night is this Friday at 8 PM EST! React with 🎯 if you're joining!
-```
-
-**Quick server info:**
-```
-!addcommand info Server information | 📋 Server Rules: Be kind • Age requirement: 13+ • Questions? DM the mods!
-```
-
-### Troubleshooting Examples
-
-**Command not working:**
-```
-User: !mycommand
-Bot: (No response)
-
-Solution: Check if command was created correctly with !help
-```
-
-**Role not being assigned:**
-```
-User: *adds reaction but doesn't get role*
-
-Solution: 
-1. Verify bot has "Manage Roles" permission
-2. Check bot's role is higher than pronoun roles
-3. Confirm correct message ID in configuration
-```
-
-**Bot not responding at all:**
-```
-Solution:
-1. Check if bot is online in Discord
-2. Verify bot can see the channel
-3. Check hosting service status
-4. Review bot logs for errors
-```
-
 ## Thread Management Examples
 
 ### Adding Bookmarked Threads
@@ -538,4 +342,89 @@ user3 [345678901]
 ```
 !usersworole Member
 Bot: All users have the role `Member`
+```
+
+## Complete Setup Examples
+
+### Initial Server Setup
+
+1. **Create Discord roles:**
+   - He/Him, She/Her, They/Them, Ask Me, Any (for pronoun system)
+   - MOD (for administrative commands)
+
+2. **Configure environment variables:**
+   ```ini
+   BOT_TOKEN=your_actual_bot_token_here
+   REACTION_CHANNEL_ID=123456789012345678
+   PRONOUN_REACTION_POST_ID=987654321098765432
+   ROLE_PRONOUN_HE=111111111111111111
+   ROLE_PRONOUN_SHE=222222222222222222
+   ROLE_PRONOUN_THEY=333333333333333333
+   ROLE_PRONOUN_ASK=444444444444444444
+   ROLE_PRONOUN_ANY=555555555555555555
+   ```
+
+3. **Test basic functionality:**
+   ```
+   !help                    # Verify bot responds
+   !time                    # Test timezone display
+   !bully                   # Test bully tracking
+   Type "It's 72°F today"   # Test unit conversion
+   Type "weezer"            # Test word corrections
+   ```
+
+### Typical Daily Usage
+
+**Create welcome command:**
+```
+!addcommand welcome New member greeting | Welcome to our awesome server! 🎉 Be sure to read #rules and introduce yourself!
+```
+
+**Create event announcement:**
+```
+!addcommand gamenight Weekly event | 🎮 Game night is every Friday at 8 PM EST! React with 🎯 if you're joining!
+```
+
+**Quick server info command:**
+```
+!addcommand info Server information | 📋 Rules: Be respectful • Age: 13+ • Questions? DM mods!
+```
+
+## Troubleshooting Examples
+
+### Common Issues
+
+**Command not working:**
+```
+User: !mycommand
+Bot: (No response)
+
+Solution: Use !help to check if command exists, verify spelling
+```
+
+**Role not being assigned:**
+```
+User: *adds reaction but doesn't get role*
+
+Solutions:
+1. Check bot has "Manage Roles" permission
+2. Ensure bot's role is higher than pronoun roles
+3. Verify correct message ID and emoji names
+```
+
+**Bot not responding:**
+```
+Solutions:
+1. Check if bot is online in Discord
+2. Verify bot can see the channel
+3. Check hosting service status
+4. Review bot logs for errors
+```
+
+**Permission denied for MOD commands:**
+```
+User tries: !addcommand test Testing | Test
+Bot: (No response)
+
+Solution: User needs the "MOD" role (case-sensitive)
 ```
