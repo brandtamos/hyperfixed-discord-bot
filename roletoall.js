@@ -41,7 +41,9 @@ async function addRoleToAll(msg, roleId, giveRole) {
 
   let success = true;
 
-  for (const member of msg.guild.members.cache.values()) {
+  const members = await msg.guild.members.fetch();
+  
+  for (const [memberId, member] of members) {
     console.log(`Adding [${roleObj.name}] role to: ${member.user.username} [${member.user.id}]`);
     if (giveRole) {
       try {
