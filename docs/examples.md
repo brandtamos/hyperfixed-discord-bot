@@ -2,7 +2,7 @@
 
 ## Custom Commands
 
-### Creating Your First Command
+### Standard Custom Commands
 
 **Creating a simple greeting command:**
 ```
@@ -13,6 +13,21 @@
 ```
 User: !hello
 Bot: Hello there! Welcome to our Discord server! 👋
+```
+
+### Secret Menu Commands
+
+**Creating a secret command:**
+```
+!addsecretmenucommand ninja Sneaky response | 🥷 You found the secret ninja command!
+```
+
+**Viewing secret commands:**
+```
+!secretmenu
+Bot: `!bully` - use this any time brandtamos is bullied
+`!bullyleaderboard` - show the current bullying leaderboard
+`!ninja` - Sneaky response
 ```
 
 ### Advanced Custom Commands
@@ -44,7 +59,9 @@ Bot: Command !hello has been removed!
 ```
 !help
 Bot: `!help` - display this message
-`!bully` - use this any time brandtamos is bullied
+`!time` - show the current time in Hyperfixed population centers
+`!threads` - shows all bookmarked threads on the server
+`!secretmenu` - show the secret menu of silly commands
 `!hello` - Simple greeting
 `!rules` - Server rules
 `!magic` - Magic 8-ball response
@@ -125,142 +142,9 @@ crandtamos has ceen cullied a total of 9 times.
 The record for the longest amount of time crandtamos has not ceen cullied is 5 days, 12 hours, 30 minutes and 15 seconds.
 ```
 
-### Bully Statistics Tracking
+### Bully Leaderboard
 
-The system automatically tracks:
-- **Time since last bully event** - Resets each time any bully command is used
-- **Total bully count** - Increments with each bully command
-- **Longest streak record** - Updates when current streak exceeds previous record
-
-## Easter Eggs
-
-### Weezer Detection
-
-**Trigger the Weezer response:**
-```
-User: I love listening to Weezer!
-Bot: *Weeer
-
-User: weezer is the best band
-Bot: *Weeer
-
-User: Have you heard the new weezer album?
-Bot: *Weeer
-```
-
-The bot responds to any variation of "weezer" in any message (case-insensitive).
-
-### Blimp Detection
-
-**Trigger the Blimp response:**
-```
-User: Did you know I flew the Goodyear blimp?
-Bot: *blump
-
-User: How many blimps are there still?
-Bot: *blumps
-```
-
-The bot responds to any variation of "blimp(s)" in any message (case-insensitive).
-
-## Time Zone Examples
-
-### Viewing Current Time
-
-**Command:**
-```
-!time
-```
-
-**Output:**
-```
-Current time in:
-**Seattle**: Mon 26 Jun 14:30 / 02:30 PM
-**Fargo**: Mon 26 Jun 16:30 / 04:30 PM
-**Charleston**: Mon 26 Jun 17:30 / 05:30 PM
-**Stockholm**: Mon 26 Jun 23:30 / 11:30 PM
-**Sydney**: Tue 27 Jun 07:30 / 07:30 AM
-```
-
-## Temperature Conversion Examples
-
-### Automatic Temperature Detection
-
-**User mentions temperature:**
-```
-User: It's 75°F outside today!
-Bot: 75°F = 24°C
-```
-
-**Multiple temperatures:**
-```
-User: The forecast shows 32°F tomorrow and 98°F later this week
-Bot: 32°F = 0°C
-98°F = 37°C
-```
-
-**Celsius to Fahrenheit:**
-```
-User: Water boils at 100°C
-Bot: 100°C = 212°F
-```
-
-**Mixed formats:**
-```
-User: It's 20C here but 85F there
-Bot: 20°C = 68°F
-85°F = 29°C
-```
-
-The bot automatically detects temperature values in various formats:
-- `75°F`, `75F`, `75f`
-- `24°C`, `24C`, `24c`
-- Supports negative temperatures: `-10°C`
-- Supports decimal values: `98.6°F`
-
-## Distance Conversion Examples
-
-### Automatic Distance Detection
-
-**User mentions distance in kilometers:**
-```
-User: The store is 5 km away
-Bot: 5 km = 3.11 mi
-```
-
-**User mentions distance in miles:**
-```
-User: It's about 10 miles to the airport
-Bot: 10 mi = 16 km
-```
-
-**Multiple distances:**
-```
-User: The marathon is 42 km but I only ran 3 miles today
-Bot: 42 km = 26 mi
-3 mi = 4.83 km
-```
-
-**Various formats supported:**
-```
-User: Distance: 100 kilometers, 50 km, 25 miles, 15 mi
-Bot: 100 km = 62 mi
-50 km = 31 mi
-25 mi = 40 km
-15 mi = 24 km
-```
-
-The bot automatically detects distance values in various formats:
-- `5 km`, `5km`, `5 kilometers`, `5 kilometer`
-- `10 mi`, `10mi`, `10 miles`, `10 mile`
-- Supports decimal values: `2.5 km`, `1.25 miles`
-- Smart rounding: values under 10 show 2 decimal places, larger values are rounded to whole numbers
-
-## Bully Leaderboard Examples
-
-### Viewing the Leaderboard
-
-**Command:**
+**Viewing the leaderboard:**
 ```
 !bullyleaderboard
 ```
@@ -279,40 +163,196 @@ The bot automatically detects distance values in various formats:
 Bot: Nobody has bullied yet!
 ```
 
-## MOD Role Usage
+## Word Corrections (Easter Eggs)
 
-### Setting Up MOD Permissions
-
-1. **Create a Discord role named "MOD"**
-2. **Assign it to trusted users**
-3. **Only users with this role can:**
-   - Create custom commands with `!addcommand`
-   - Remove custom commands with `!removecommand`
-
-### MOD Command Examples
-
-**Successful command creation (user has MOD role):**
+**Trigger various corrections:**
 ```
-MOD User: !addcommand welcome New member greeting | Welcome to our awesome server! 🎉
-Bot: Command `!welcome` has been successfully added!
-```
+User: I love listening to Weezer!
+Bot: *Weeer
 
-**Failed command creation (user lacks MOD role):**
-```
-Regular User: !addcommand test Testing | This is a test
-Bot: (No response - command ignored)
+User: Did you know I flew the Goodyear blimp?
+Bot: *blump
+
+User: Check out my new skateboard!
+Bot: *skamtbord
+
+User: How many blimps are there still?
+Bot: *blumps
 ```
 
-## Server Setup Examples
+The bot responds to variations of these words (case-insensitive):
+- "weezer" → "*Weeer"
+- "blimp" → "*blump" 
+- "blimps" → "*blumps"
+- "skateboard" → "*skamtbord"
 
-### Complete Bot Setup Workflow
+## Time Zone Examples
 
-1. **Initial Discord setup:**
-   - Create bot application
-   - Get bot token
-   - Invite bot to server with proper permissions
+### Viewing Current Time
 
-2. **Configure environment:**
+**Command:**
+```
+!time
+```
+
+**Output:**
+```
+Current time in:
+**Seattle**: Mon 26 Jun 14:30 / 02:30 PM
+**Regina**: Mon 26 Jun 15:30 / 03:30 PM
+**Fargo**: Mon 26 Jun 16:30 / 04:30 PM
+**Charleston**: Mon 26 Jun 17:30 / 05:30 PM
+**Edinburgh**: Mon 26 Jun 22:30 / 10:30 PM
+**Stockholm**: Mon 26 Jun 23:30 / 11:30 PM
+**Perth**: Tue 27 Jun 05:30 / 05:30 AM
+**Sydney**: Tue 27 Jun 07:30 / 07:30 AM
+```
+
+## Unit Conversion Examples
+
+### Temperature Conversion
+
+**Automatic temperature detection:**
+```
+User: It's 75°F outside today!
+Bot: 75 F = 23.89 °C
+
+User: Water boils at 100°C
+Bot: 100 C = 212 °F
+
+User: It's 20C here but 85F there
+Bot: 20 C = 68 °F
+85 F = 29.44 °C
+```
+
+### Distance Conversion
+
+**Automatic distance detection:**
+```
+User: The store is 5 km away
+Bot: 5 km = 3.11 mi
+
+User: It's about 10 miles to the airport
+Bot: 10 mi = 16.09 km
+
+User: The pool is 25 meters long
+Bot: 25 m = 82.02 ft
+
+User: I'm 6 feet tall
+Bot: 6 ft = 1.83 m
+```
+
+### Weight Conversion
+
+**Automatic weight detection:**
+```
+User: This package weighs 2.5 kg
+Bot: 2.5 kg = 5.51 lb
+
+User: I need 500 grams of flour
+Bot: 500 g = 17.5 oz
+
+User: The baby weighs 8 pounds
+Bot: 8 lb = 3.63 kg
+```
+
+**Supported conversion formats:**
+- **Temperature**: °F ↔ °C (supports variations: F, f, C, c, fahrenheit, celsius)
+- **Distance**: km ↔ mi, m ↔ ft, cm ↔ in (supports full words: kilometers, miles, meters, feet, etc.)
+- **Weight**: kg ↔ lb, g ↔ oz (supports full words: kilograms, pounds, grams, ounces)
+
+## Thread Management Examples
+
+### Adding Bookmarked Threads
+
+**Add thread by ID:**
+```
+!addthread 123456789012345678 | Important discussion about server rules
+Bot: <#123456789012345678> has been successfully **added** to the list for this channel!
+```
+
+**Add thread by name:**
+```
+!addthread "Weekly Discussion" | Our weekly community discussion thread
+Bot: <#987654321098765432> has been successfully **added** to the list for this channel!
+```
+
+### Managing Bookmarked Threads
+
+**Remove a bookmarked thread:**
+```
+!removethread 123456789012345678
+Bot: <#123456789012345678> has been successfully **removed** from the list for this channel!
+```
+
+**List all bookmarked threads:**
+```
+!threads
+Bot: All bookmarked threads on the server:
+<#123456789012345678> - Important discussion about server rules
+<#987654321098765432> - Weekly community discussion
+<#456789012345678901> - Bot suggestions and feedback
+```
+
+## Role Management Examples (MOD only)
+
+### Bulk Role Addition
+
+**Add role to all members:**
+```
+!addrole Member
+Bot: Finnished adding the role `Member` to all server members.
+```
+
+**Preview role addition (dry run):**
+```
+!dryaddrole Verified
+Bot: DRY RUN: Finnished adding the role `Verified` to all server members.
+```
+
+### Bulk Role Removal
+
+**Remove role from all members:**
+```
+!removerole "Old Event"
+Bot: Finnished removing the role `Old Event` from all server members.
+```
+
+**Preview role removal (dry run):**
+```
+!dryremoverole 123456789012345678
+Bot: DRY RUN: Finnished removing the role `Event Participant` from all server members.
+```
+
+### Find Users Missing Roles
+
+**List users without a role:**
+```
+!usersworole Verified
+```
+
+**Bot creates thread: "Users without the `Verified` role"**
+```
+user1 [123456789]
+user2 [234567890]
+user3 [345678901]
+```
+
+**If all users have the role:**
+```
+!usersworole Member
+Bot: All users have the role `Member`
+```
+
+## Complete Setup Examples
+
+### Initial Server Setup
+
+1. **Create Discord roles:**
+   - He/Him, She/Her, They/Them, Ask Me, Any (for pronoun system)
+   - MOD (for administrative commands)
+
+2. **Configure environment variables:**
    ```ini
    BOT_TOKEN=your_actual_bot_token_here
    REACTION_CHANNEL_ID=123456789012345678
@@ -324,71 +364,67 @@ Bot: (No response - command ignored)
    ROLE_PRONOUN_ANY=555555555555555555
    ```
 
-3. **Create Discord roles:**
-   - He/Him
-   - She/Her  
-   - They/Them
-   - Ask Me
-   - Any
-   - MOD
-
-4. **Start bot and test:**
-   ```bash
-   npm start
+3. **Test basic functionality:**
    ```
-
-5. **Test functionality:**
-   - `!help` - Verify bot responds
-   - `!time` - Test time zone display
-   - `!bully` - Test bully tracking
-   - `!bullyleaderboard` - Test leaderboard
-   - Temperature test - Type "It's 75°F today" to test conversion
-   - Weezer test - Type "weezer" to test easter egg
-   - Reaction test - Add/remove pronoun reactions
-   - MOD test - Create a custom command
+   !help                    # Verify bot responds
+   !time                    # Test timezone display
+   !bully                   # Test bully tracking
+   Type "It's 72°F today"   # Test unit conversion
+   Type "weezer"            # Test word corrections
+   ```
 
 ### Typical Daily Usage
 
-**Morning server greeting command:**
+**Create welcome command:**
 ```
-!addcommand goodmorning Daily greeting | Good morning everyone! ☀️ Hope you have a wonderful day!
-```
-
-**Server event announcement:**
-```
-!addcommand event Weekly event info | 🎮 Game night is this Friday at 8 PM EST! React with 🎯 if you're joining!
+!addcommand welcome New member greeting | Welcome to our awesome server! 🎉 Be sure to read #rules and introduce yourself!
 ```
 
-**Quick server info:**
+**Create event announcement:**
 ```
-!addcommand info Server information | 📋 Server Rules: Be kind • Age requirement: 13+ • Questions? DM the mods!
+!addcommand gamenight Weekly event | 🎮 Game night is every Friday at 8 PM EST! React with 🎯 if you're joining!
 ```
 
-### Troubleshooting Examples
+**Quick server info command:**
+```
+!addcommand info Server information | 📋 Rules: Be respectful • Age: 13+ • Questions? DM mods!
+```
+
+## Troubleshooting Examples
+
+### Common Issues
 
 **Command not working:**
 ```
 User: !mycommand
 Bot: (No response)
 
-Solution: Check if command was created correctly with !help
+Solution: Use !help to check if command exists, verify spelling
 ```
 
 **Role not being assigned:**
 ```
 User: *adds reaction but doesn't get role*
 
-Solution: 
-1. Verify bot has "Manage Roles" permission
-2. Check bot's role is higher than pronoun roles
-3. Confirm correct message ID in configuration
+Solutions:
+1. Check bot has "Manage Roles" permission
+2. Ensure bot's role is higher than pronoun roles
+3. Verify correct message ID and emoji names
 ```
 
-**Bot not responding at all:**
+**Bot not responding:**
 ```
-Solution:
+Solutions:
 1. Check if bot is online in Discord
 2. Verify bot can see the channel
 3. Check hosting service status
 4. Review bot logs for errors
+```
+
+**Permission denied for MOD commands:**
+```
+User tries: !addcommand test Testing | Test
+Bot: (No response)
+
+Solution: User needs the "MOD" role (case-sensitive)
 ```
