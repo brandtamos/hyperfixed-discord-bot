@@ -14,6 +14,7 @@ const timezone = require('./timezone.js');
 const conversion = require('./conversion.js');
 const commands = require('./commands.js');
 const roletoall = require('./roletoall.js');
+const sentience = require('./sentience.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
@@ -145,6 +146,16 @@ client.on("messageCreate", async msg => {
             if(userIsMod(msg)) {
                 role = roletoall.getRoleFromCommand(msg);
                 await roletoall.listUsersWithoutRoleCommand(msg, role); 
+            }
+            break;
+        case "!botsay":
+            if(userIsMod(msg)){
+                sentience.botSay(msg, client);
+            }
+            break;
+        case "!botreact":
+            if(userIsMod(msg)){
+                sentience.botReact(msg, client);
             }
         default:
             break;
