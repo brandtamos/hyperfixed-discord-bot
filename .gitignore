@@ -1,5 +1,5 @@
 .DS_store
 .env
-emojiToRole.js
+emojiToRole.json
 /node_modules
 /storage

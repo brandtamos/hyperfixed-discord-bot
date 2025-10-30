@@ -24,7 +24,7 @@ const bullyRegex = /^!\p{L}ully$/u;
 let trackedPronounMessage = null;
 
 /** @type {Map<string>: Map<string, string>} Maps reaction message id to emoji names to Discord role IDs */
-const data = JSON.parse(fs.readFileSync('./emojiToRole.js','utf8'));
+const data = JSON.parse(fs.readFileSync('./emojiToRole.json','utf8'));
 const emojiToRoleMaps = new Map();
 for (const [messageId, emojiToRole] of Object.entries(data)) {
   emojiToRoleMaps.set(messageId, new Map(Object.entries(emojiToRole)));
