@@ -24,11 +24,25 @@ const bullyRegex = /^!\p{L}ully$/u;
 let trackedPronounMessage = null;
 
 /** @type {Map<string>: Map<string, string>} Maps reaction message id to emoji names to Discord role IDs */
-const data = JSON.parse(fs.readFileSync('./emojiToRole.json','utf8'));
+let emojiToRoleJson;
+let EMOJI_ROLES = false;
 const emojiToRoleMaps = new Map();
-for (const [messageId, emojiToRole] of Object.entries(data)) {
-  emojiToRoleMaps.set(messageId, new Map(Object.entries(emojiToRole)));
+
+try {
+  const fileContent = fs.readFileSync('./emojiToRole.json','utf8').trim();
+  if (fileContent) {
+    emojiToRoleJson = JSON.parse(fileContent);
+    EMOJI_ROLES = true;
+  }
+} catch (err) {
+  console.log(`Error reading emojiToRole.json: ${err}`)
 }
+
+if (EMOJI_ROLES) {
+  for (const [messageId, emojiToRole] of Object.entries(emojiToRoleJson)) {
+    emojiToRoleMaps.set(messageId, new Map(Object.entries(emojiToRole)));
+  }
+} 
 
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
@@ -231,20 +245,22 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-   for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
-     if (reaction.message.id === messageId) {
+  if (EMOJI_ROLES) {
+    for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
+      if (reaction.message.id === messageId) {
         console.log(`${user.tag} added ${reaction.emoji.name}`);
 
         if(emojiToRoleMap.has(reaction.emoji.name)){
-            let roleId = emojiToRoleMap.get(reaction.emoji.name);
+          let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
-            const guild = reaction.message.guild;
-            const member = await guild.members.fetch(user.id);
+          const guild = reaction.message.guild;
+          const member = await guild.members.fetch(user.id);
 
-            await member.roles.add(roleId).catch(console.error);
+          await member.roles.add(roleId).catch(console.error);
         }
-     }
-   } 
+      }
+    }
+  } 
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -257,36 +273,41 @@ client.on('messageReactionRemove', async (reaction, user) => {
         }
     }
 
-   for (const [messageId, emojiToRoleMap] of  emojiToRoleMaps) {
-        if (reaction.message.id === messageId) {
-            console.log(`${user.tag} removed ${reaction.emoji.name}`);
+   if (EMOJI_ROLES) {
+     for (const [messageId, emojiToRoleMap] of  emojiToRoleMaps) {
+       if (reaction.message.id === messageId) {
+         console.log(`${user.tag} removed ${reaction.emoji.name}`);
 
-            if(emojiToRoleMap.has(reaction.emoji.name)){
-                let roleId = emojiToRoleMap.get(reaction.emoji.name);
+         if(emojiToRoleMap.has(reaction.emoji.name)){
+           let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
-                const guild = reaction.message.guild;
-                const member = await guild.members.fetch(user.id);
+           const guild = reaction.message.guild;
+           const member = await guild.members.fetch(user.id);
 
-                await member.roles.remove(roleId).catch(console.error);
-            }
-        }
+           await member.roles.remove(roleId).catch(console.error);
+         }
+       }
+     }
    }
 });
 
 //setting up posts to track reactions on
-client.once('ready', async () => {
+if (EMOJI_ROLES) {
+  client.once('ready', async () => {
     const channel = await client.channels.fetch(REACTION_CHANNEL_ID);
     trackedMessages = [];
     for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
-        try {
-            const trackedMessage = await channel.messages.fetch(messageId); 
-            console.log(`Tracking reactions on message: ${trackedMessage.id}`)
-            trackedMessages.push(trackedMessage);
-        } catch (err) {
-            console.error(`Failed to fetch message ${messageId}:`, err.message); 
-        }
+      try {
+        const trackedMessage = await channel.messages.fetch(messageId); 
+        console.log(`Tracking reactions on message: ${trackedMessage.id}`)
+        trackedMessages.push(trackedMessage);
+      } catch (err) {
+        console.error(`Failed to fetch message ${messageId}:`, err.message); 
+      }
     }
-});
+  });
+}
+
 
 client.login(process.env.BOT_TOKEN).catch(err => {
     console.error(err);
