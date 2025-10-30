@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { Client, GatewayIntentBits, messageLink, Partials } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -16,21 +17,18 @@ const commands = require('./commands.js');
 const roletoall = require('./roletoall.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
-const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
 
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
 const bullyRegex = /^!\p{L}ully$/u;
 
 let trackedPronounMessage = null;
 
-/** @type {Map<string, string>} Maps emoji names to Discord role IDs */
-const emojiToRoleMap = new Map([
-    ['pronoun_he', process.env.ROLE_PRONOUN_HE],
-    ['pronoun_she', process.env.ROLE_PRONOUN_SHE],
-    ['pronoun_they', process.env.ROLE_PRONOUN_THEY],
-    ['pronoun_ask', process.env.ROLE_PRONOUN_ASK],
-    ['pronoun_any', process.env.ROLE_PRONOUN_ANY],
-  ]);
+/** @type {Map<string>: Map<string, string>} Maps reaction message id to emoji names to Discord role IDs */
+const data = JSON.parse(fs.readFileSync('./emojiToRole.js','utf8'));
+const emojiToRoleMaps = new Map();
+for (const [messageId, emojiToRole] of Object.entries(data)) {
+  emojiToRoleMaps.set(messageId, new Map(Object.entries(emojiToRole)));
+}
 
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
@@ -233,7 +231,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
+   for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
+     if (reaction.message.id === messageId) {
         console.log(`${user.tag} added ${reaction.emoji.name}`);
 
         if(emojiToRoleMap.has(reaction.emoji.name)){
@@ -244,7 +243,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
 
             await member.roles.add(roleId).catch(console.error);
         }
-    }
+     }
+   } 
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -257,35 +257,44 @@ client.on('messageReactionRemove', async (reaction, user) => {
         }
     }
 
-    if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
-        console.log(`${user.tag} removed ${reaction.emoji.name}`);
+   for (const [messageId, emojiToRoleMap] of  emojiToRoleMaps) {
+        if (reaction.message.id === messageId) {
+            console.log(`${user.tag} removed ${reaction.emoji.name}`);
 
-        if(emojiToRoleMap.has(reaction.emoji.name)){
-            let roleId = emojiToRoleMap.get(reaction.emoji.name);
+            if(emojiToRoleMap.has(reaction.emoji.name)){
+                let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
-            const guild = reaction.message.guild;
-            const member = await guild.members.fetch(user.id);
+                const guild = reaction.message.guild;
+                const member = await guild.members.fetch(user.id);
 
-            await member.roles.remove(roleId).catch(console.error);
+                await member.roles.remove(roleId).catch(console.error);
+            }
         }
-    }
+   }
 });
 
 //setting up posts to track reactions on
 client.once('ready', async () => {
     const channel = await client.channels.fetch(REACTION_CHANNEL_ID);
-    trackedPronounMessage = await channel.messages.fetch(PRONOUN_REACTION_POST_ID);
-
-    console.log(`Tracking reactions on message: ${trackedPronounMessage.id}`);
+    trackedMessages = [];
+    for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
+        try {
+            const trackedMessage = await channel.messages.fetch(messageId); 
+            console.log(`Tracking reactions on message: ${trackedMessage.id}`)
+            trackedMessages.push(trackedMessage);
+        } catch (err) {
+            console.error(`Failed to fetch message ${messageId}:`, err.message); 
+        }
+    }
 });
 
 client.login(process.env.BOT_TOKEN).catch(err => {
     console.error(err);
     process.exit();
-  });
+});
 
-  process.on("exit",  () => {
+process.on("exit",  () => {
     console.log('destroying bot client');
     client.destroy();
-  });
+});
 
