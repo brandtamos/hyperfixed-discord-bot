@@ -244,8 +244,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
     }
 
   if (EMOJI_ROLES) {
-    for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
-      if (reaction.message.id === messageId) {
+      if (emojiToRoleMaps.has(reaction.message.id)) {
+        const emojiToRoleMap = emojiToRoleMaps.get(reaction.message.id);
+
         console.log(`${user.tag} added ${reaction.emoji.name}`);
 
         if(emojiToRoleMap.has(reaction.emoji.name)){
@@ -258,7 +259,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
       }
     }
-  } 
 });
 
 client.on('messageReactionRemove', async (reaction, user) => {
@@ -272,8 +272,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
     }
 
    if (EMOJI_ROLES) {
-     for (const [messageId, emojiToRoleMap] of  emojiToRoleMaps) {
-       if (reaction.message.id === messageId) {
+       if (emojiToRoleMaps.has(reaction.message.id)) {
+         const emojiToRoleMap = emojiToRoleMaps.get(reaction.message.id);
+         
          console.log(`${user.tag} removed ${reaction.emoji.name}`);
 
          if(emojiToRoleMap.has(reaction.emoji.name)){
@@ -286,7 +287,6 @@ client.on('messageReactionRemove', async (reaction, user) => {
          }
        }
      }
-   }
 });
 
 //setting up posts to track reactions on
