@@ -295,7 +295,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
 if (EMOJI_ROLES) {
   client.once('ready', async () => {
     const channel = await client.channels.fetch(REACTION_CHANNEL_ID);
-    trackedMessages = [];
+    const trackedMessages = [];
     for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
       try {
         const trackedMessage = await channel.messages.fetch(messageId); 
