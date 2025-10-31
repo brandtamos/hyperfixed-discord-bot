@@ -21,8 +21,6 @@ const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
 const bullyRegex = /^!\p{L}ully$/u;
 
-let trackedPronounMessage = null;
-
 /** @type {Map<string>: Map<string, string>} Maps reaction message id to emoji names to Discord role IDs */
 let emojiToRoleJson;
 let EMOJI_ROLES = false;
