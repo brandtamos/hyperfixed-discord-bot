@@ -1,4 +1,3 @@
-const fs = require('fs');
 const { Client, GatewayIntentBits, messageLink, Partials } = require('discord.js');
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -18,29 +17,20 @@ const roletoall = require('./roletoall.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 
-/** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
-const bullyRegex = /^!\p{L}ully$/u;
-
-/** @type {Map<string>: Map<string, string>} Maps reaction message id to emoji names to Discord role IDs */
-let emojiToRoleJson;
-let EMOJI_ROLES = false;
-const emojiToRoleMaps = new Map();
-
+let EMOJI_TO_ROLES;
 try {
-  const fileContent = fs.readFileSync('./emojiToRole.json','utf8').trim();
-  if (fileContent) {
-    emojiToRoleJson = JSON.parse(fileContent);
-    EMOJI_ROLES = true;
-  }
+  ( { EMOJI_TO_ROLES } = require('./emojiToRoles.js'));
 } catch (err) {
-  console.log(`Error reading emojiToRole.json: ${err}`)
+  if (err.code === 'MODULE_NOT_FOUND') {
+    EMOJI_TO_ROLES = new Map();
+    console.log(`No emojiToRoles.js exists, not using emoji to role function.`)
+  } else {
+    console.log(`Emoji to roles error: ${err}`);
+  }
 }
 
-if (EMOJI_ROLES) {
-  for (const [messageId, emojiToRole] of Object.entries(emojiToRoleJson)) {
-    emojiToRoleMaps.set(messageId, new Map(Object.entries(emojiToRole)));
-  }
-} 
+/** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
+const bullyRegex = /^!\p{L}ully$/u;
 
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
@@ -243,9 +233,9 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-  if (EMOJI_ROLES) {
-      if (emojiToRoleMaps.has(reaction.message.id)) {
-        const emojiToRoleMap = emojiToRoleMaps.get(reaction.message.id);
+  if (EMOJI_TO_ROLES.size !== 0) {
+      if (EMOJI_TO_ROLES.has(reaction.message.id)) {
+        const emojiToRoleMap = EMOJI_TO_ROLES.get(reaction.message.id);
 
         console.log(`${user.tag} added ${reaction.emoji.name}`);
 
@@ -271,9 +261,9 @@ client.on('messageReactionRemove', async (reaction, user) => {
         }
     }
 
-   if (EMOJI_ROLES) {
-       if (emojiToRoleMaps.has(reaction.message.id)) {
-         const emojiToRoleMap = emojiToRoleMaps.get(reaction.message.id);
+   if (EMOJI_TO_ROLES.size !== 0) {
+       if (EMOJI_TO_ROLES.has(reaction.message.id)) {
+         const emojiToRoleMap = EMOJI_TO_ROLES.get(reaction.message.id);
          
          console.log(`${user.tag} removed ${reaction.emoji.name}`);
 
@@ -290,11 +280,11 @@ client.on('messageReactionRemove', async (reaction, user) => {
 });
 
 //setting up posts to track reactions on
-if (EMOJI_ROLES) {
+if (EMOJI_TO_ROLES.size !== 0) {
   client.once('ready', async () => {
     const channel = await client.channels.fetch(REACTION_CHANNEL_ID);
     const trackedMessages = [];
-    for (const [messageId, emojiToRoleMap] of emojiToRoleMaps) {
+    for (const [messageId, emojiToRoleMap] of EMOJI_TO_ROLES) {
       try {
         const trackedMessage = await channel.messages.fetch(messageId); 
         console.log(`Tracking reactions on message: ${trackedMessage.id}`)
