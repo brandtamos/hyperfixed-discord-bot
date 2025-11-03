@@ -17,21 +17,21 @@ const roletoall = require('./roletoall.js');
 const sentience = require('./sentience.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
-const PRONOUN_REACTION_POST_ID = process.env.PRONOUN_REACTION_POST_ID;
+
+let EMOJI_TO_ROLES;
+try {
+  ( { EMOJI_TO_ROLES } = require('./emojiToRoles.js'));
+} catch (err) {
+  if (err.code === 'MODULE_NOT_FOUND') {
+    EMOJI_TO_ROLES = new Map();
+    console.log(`No emojiToRoles.js exists, not using emoji to role function.`)
+  } else {
+    console.log(`Emoji to roles error: ${err}`);
+  }
+}
 
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
 const bullyRegex = /^!\p{L}ully$/u;
-
-let trackedPronounMessage = null;
-
-/** @type {Map<string, string>} Maps emoji names to Discord role IDs */
-const emojiToRoleMap = new Map([
-    ['pronoun_he', process.env.ROLE_PRONOUN_HE],
-    ['pronoun_she', process.env.ROLE_PRONOUN_SHE],
-    ['pronoun_they', process.env.ROLE_PRONOUN_THEY],
-    ['pronoun_ask', process.env.ROLE_PRONOUN_ASK],
-    ['pronoun_any', process.env.ROLE_PRONOUN_ANY],
-  ]);
 
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
@@ -244,17 +244,21 @@ client.on('messageReactionAdd', async (reaction, user) => {
         }
     }
 
-    if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
+  if (EMOJI_TO_ROLES.size !== 0) {
+      if (EMOJI_TO_ROLES.has(reaction.message.id)) {
+        const emojiToRoleMap = EMOJI_TO_ROLES.get(reaction.message.id);
+
         console.log(`${user.tag} added ${reaction.emoji.name}`);
 
         if(emojiToRoleMap.has(reaction.emoji.name)){
-            let roleId = emojiToRoleMap.get(reaction.emoji.name);
+          let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
-            const guild = reaction.message.guild;
-            const member = await guild.members.fetch(user.id);
+          const guild = reaction.message.guild;
+          const member = await guild.members.fetch(user.id);
 
-            await member.roles.add(roleId).catch(console.error);
+          await member.roles.add(roleId).catch(console.error);
         }
+      }
     }
 });
 
@@ -268,35 +272,49 @@ client.on('messageReactionRemove', async (reaction, user) => {
         }
     }
 
-    if (reaction.message.id === PRONOUN_REACTION_POST_ID) {
-        console.log(`${user.tag} removed ${reaction.emoji.name}`);
+   if (EMOJI_TO_ROLES.size !== 0) {
+       if (EMOJI_TO_ROLES.has(reaction.message.id)) {
+         const emojiToRoleMap = EMOJI_TO_ROLES.get(reaction.message.id);
+         
+         console.log(`${user.tag} removed ${reaction.emoji.name}`);
 
-        if(emojiToRoleMap.has(reaction.emoji.name)){
-            let roleId = emojiToRoleMap.get(reaction.emoji.name);
+         if(emojiToRoleMap.has(reaction.emoji.name)){
+           let roleId = emojiToRoleMap.get(reaction.emoji.name);
 
-            const guild = reaction.message.guild;
-            const member = await guild.members.fetch(user.id);
+           const guild = reaction.message.guild;
+           const member = await guild.members.fetch(user.id);
 
-            await member.roles.remove(roleId).catch(console.error);
-        }
-    }
+           await member.roles.remove(roleId).catch(console.error);
+         }
+       }
+     }
 });
 
 //setting up posts to track reactions on
-client.once('ready', async () => {
+if (EMOJI_TO_ROLES.size !== 0) {
+  client.once('ready', async () => {
     const channel = await client.channels.fetch(REACTION_CHANNEL_ID);
-    trackedPronounMessage = await channel.messages.fetch(PRONOUN_REACTION_POST_ID);
+    const trackedMessages = [];
+    for (const [messageId, emojiToRoleMap] of EMOJI_TO_ROLES) {
+      try {
+        const trackedMessage = await channel.messages.fetch(messageId); 
+        console.log(`Tracking reactions on message: ${trackedMessage.id}`)
+        trackedMessages.push(trackedMessage);
+      } catch (err) {
+        console.error(`Failed to fetch message ${messageId}:`, err.message); 
+      }
+    }
+  });
+}
 
-    console.log(`Tracking reactions on message: ${trackedPronounMessage.id}`);
-});
 
 client.login(process.env.BOT_TOKEN).catch(err => {
     console.error(err);
     process.exit();
-  });
+});
 
-  process.on("exit",  () => {
+process.on("exit",  () => {
     console.log('destroying bot client');
     client.destroy();
-  });
+});
 
