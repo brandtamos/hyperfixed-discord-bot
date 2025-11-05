@@ -1,10 +1,46 @@
-const { Client, GatewayIntentBits, messageLink, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, messageLink, Partials, Options } = require('discord.js');
+
+
+//discord.js cache config. use this to keep virtual memory from ballooning out of control
+const MESSAGE_CACHE_SIZE = 50;
+const MEMBER_CACHE_SIZE = 200;
+const SWEEP_INTERVAL = 3600;
+const MESSAGE_LIFETIME = 1800;
+
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessageReactions],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction] });
+    partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+
+    //makecache options set hard limits on cache sizes
+    makeCache: Options.cacheWithLimits({
+        MessageManager: MESSAGE_CACHE_SIZE, 
+        GuildMemberManager: { 
+            maxSize: MEMBER_CACHE_SIZE,
+            keepOverLimit: (member) => member.id === client.user.id, 
+        },
+        ThreadManager: 0, //disabling thread caching saves a lot of memory
+    }),
+    
+    //sweepers periodically clean up global caches based on age/activity
+    sweepers: {
+        ...Options.DefaultSweeperSettings,
+        users: { 
+            interval: SWEEP_INTERVAL, 
+            filter: () => (user) => user.id !== client.user.id && user.bot, //it's important to not remove the bot itself from the cache
+        },
+        messages: {
+            interval: SWEEP_INTERVAL,
+            lifetime: MESSAGE_LIFETIME,
+        },
+        guildMembers: {
+            interval: SWEEP_INTERVAL,
+            filter: () => (member) => !member.user.bot && (Date.now() - member.joinedTimestamp > 3600000), 
+        }
+    } 
+});
 
 require('dotenv').config();
 const storage = require('node-persist');
