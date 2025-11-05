@@ -32,7 +32,10 @@ jest.mock('discord.js', () => {
             Message: 0,
             Channel: 0,
             Reaction: 0,
-        }
+        },
+        Options: {
+            cacheWithLimits: jest.fn(config => config) // returns the config itself
+         },
     };
 });
 

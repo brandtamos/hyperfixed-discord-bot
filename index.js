@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits, messageLink, Partials, Options } = require('discord.js');
 
-
 //discord.js cache config. use this to keep virtual memory from ballooning out of control
 const MESSAGE_CACHE_SIZE = 50;
 const MEMBER_CACHE_SIZE = 200;
