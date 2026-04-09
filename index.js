@@ -256,7 +256,13 @@ function postSecretMenu(msg){
         let newSecretMenuLine = "`" + command.command + "` - " + command.description + "\n";
         response = response + newSecretMenuLine;
     });
-    msg.channel.send(response);
+
+    const chunkSize = 2000;
+
+    for(let i = 0; i < response.length; i+= chunkSize){
+        let chunk = response.slice(i, i + chunkSize);
+        msg.channel.send(chunk);
+    }
 }
 
 /**
