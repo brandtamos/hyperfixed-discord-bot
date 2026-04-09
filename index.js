@@ -50,6 +50,7 @@ const conversion = require('./conversion.js');
 const commands = require('./commands.js');
 const roletoall = require('./roletoall.js');
 const sentience = require('./sentience.js');
+const bigDogOfTheWeek = require('./bigDogOfTheWeek.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 
@@ -192,6 +193,20 @@ client.on("messageCreate", async msg => {
             if(userIsMod(msg)){
                 sentience.botReact(msg, client);
             }
+            break;
+        case "!pickbigdog":
+            if(userIsMod(msg)){
+                bigDogOfTheWeek.pickRandomMember(msg);
+            }
+            break;
+        case "!setbigdog":
+            if(userIsMod(msg)){
+                bigDogOfTheWeek.setBigDog(msg);
+            }
+            break;
+        case "!bigdog":
+            bigDogOfTheWeek.getCurrentBigDog(msg);
+            break;
         default:
             break;
     }
