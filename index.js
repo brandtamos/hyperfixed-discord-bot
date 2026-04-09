@@ -248,7 +248,8 @@ function postHelp(msg){
 function postSecretMenu(msg){
 
     let response = '`!bully` - use this any time brandtamos is bullied\n' +
-        '`!bullyleaderboard` - show the current bullying leaderboard\n';
+        '`!bullyleaderboard` - show the current bullying leaderboard\n' +
+        '`!bigdog` - show the current Big Dog of the Week\n';
 
     let secretMenuCommands = commands.getSecretMenuCommands();
     secretMenuCommands.forEach((command) => {
