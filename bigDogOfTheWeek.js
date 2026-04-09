@@ -43,7 +43,7 @@ async function pickRandomMember(msg) {
 async function setBigDog(msg){
     const bigDogName = msg.content.split(/\s+/)[1];
     //expire big dog status in 7 days
-    const bigDogExpires = (Math.floor(Date.now())) + (7 * 24 * 60 * 60); 
+    const bigDogExpires = (Math.floor(Date.now())) + (7 * 24 * 60 * 60 * 1000); 
 
     let bigDogObj = {bigDogName: bigDogName, bigDogExpires: bigDogExpires};
     await storage.setItem('bigDogOfTheWeek', bigDogObj);
