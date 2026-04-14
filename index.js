@@ -5,6 +5,7 @@ const MESSAGE_CACHE_SIZE = 50;
 const MEMBER_CACHE_SIZE = 200;
 const SWEEP_INTERVAL = 3600;
 const MESSAGE_LIFETIME = 1800;
+const MAX_MESSAGE_LENGTH = 2000;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
@@ -254,14 +255,15 @@ function postSecretMenu(msg){
     let secretMenuCommands = commands.getSecretMenuCommands();
     secretMenuCommands.forEach((command) => {
         let newSecretMenuLine = "`" + command.command + "` - " + command.description + "\n";
+        if ((response.length + newSecretMenuLine.length) >= MAX_MESSAGE_LENGTH) {
+            msg.channel.send(response);
+            response = '';
+        }
         response = response + newSecretMenuLine;
     });
 
-    const chunkSize = 2000;
-
-    for(let i = 0; i < response.length; i+= chunkSize){
-        let chunk = response.slice(i, i + chunkSize);
-        msg.channel.send(chunk);
+    if (response.length > 0) {
+        msg.channel.send(response);
     }
 }
 
