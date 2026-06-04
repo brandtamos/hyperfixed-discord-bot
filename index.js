@@ -52,6 +52,7 @@ const commands = require('./commands.js');
 const roletoall = require('./roletoall.js');
 const sentience = require('./sentience.js');
 const bigDogOfTheWeek = require('./bigDogOfTheWeek.js');
+const flightWx = require('./flightwx.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 
@@ -207,6 +208,12 @@ client.on("messageCreate", async msg => {
             break;
         case "!bigdog":
             bigDogOfTheWeek.getCurrentBigDog(msg);
+            break;
+        case "!metar":
+            flightWx.wx("metar", msg);
+            break;
+        case "!taf":
+            flightWx.wx("taf", msg);
             break;
         default:
             break;
