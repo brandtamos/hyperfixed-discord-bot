@@ -62,11 +62,16 @@ try {
   ( { EMOJI_TO_ROLES } = require('./emojiToRoles.js'));
 } catch (err) {
   if (err.code === 'MODULE_NOT_FOUND') {
-    EMOJI_TO_ROLES = new Map();
     console.log(`No emojiToRoles.js exists, not using emoji to role function.`)
   } else {
     console.log(`Emoji to roles error: ${err}`);
   }
+}
+
+// Always fall back to an empty map so a missing/unloadable emojiToRoles.js
+// (e.g. when required under a test runner) can't crash the whole bot at startup.
+if (!EMOJI_TO_ROLES) {
+  EMOJI_TO_ROLES = new Map();
 }
 
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */

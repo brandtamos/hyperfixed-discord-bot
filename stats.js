@@ -16,15 +16,22 @@ async function loadStats(){
     return commandStats;
 }
 
-//async start function - initializes storage and loads existing stats on app start
-const start = async function(){
+/*
+ * Shared readiness promise. node-persist does not expose getItem/setItem
+ * until init() has resolved, so every storage access below awaits this
+ * first to avoid "storage.setItem is not a function" race conditions.
+ */
+const ready = (async () => {
     await storage.init({dir: 'storage'});
     await loadStats();
-}
-start();
+})().catch(err => {
+    console.error('Failed to initialize stats storage:', err);
+});
 
 /**
  * Increments the usage counter for a command and persists it.
+ * Never throws - storage problems are logged so a failed stat write
+ * can't take down the message handler that calls it.
  * @async
  * @param {string} command - The command that was used (e.g. "!help")
  * @returns {Promise<void>}
@@ -33,8 +40,13 @@ async function recordCommand(command){
     if(!command){
         return;
     }
-    commandStats[command] = (commandStats[command] || 0) + 1;
-    await storage.setItem(STORAGE_KEY, commandStats);
+    try {
+        await ready;
+        commandStats[command] = (commandStats[command] || 0) + 1;
+        await storage.setItem(STORAGE_KEY, commandStats);
+    } catch (err) {
+        console.error('Failed to record command stat:', err);
+    }
 }
 
 /**
