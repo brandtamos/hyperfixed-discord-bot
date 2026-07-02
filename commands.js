@@ -1,4 +1,5 @@
 const storage = require('node-persist');
+const stats = require('./stats.js');
 
 let commandList = [];
 let secretMenuCommandList = [];
@@ -35,12 +36,14 @@ start();
 function checkForCommand(msg, command){
     let commandObject = commandList.find(commandObj => commandObj.command == command);
     if(commandObject){
+        stats.recordCommand(command);
         msg.channel.send(commandObject.commandText);
         return;
     }
 
     commandObject = secretMenuCommandList.find(commandObj => commandObj.command == command);
     if(commandObject){
+        stats.recordCommand(command);
         msg.channel.send(commandObject.commandText);
     }
 }
