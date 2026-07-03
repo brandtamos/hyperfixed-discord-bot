@@ -20,9 +20,11 @@ const emojiToRoles = {
   }
 }
 
-export let EMOJI_TO_ROLES = new Map(
+const EMOJI_TO_ROLES = new Map(
   Object.entries(emojiToRoles).map(([messageId, emojiToRole]) => [
     messageId,
     new Map(Object.entries(emojiToRole)),
   ])
 );
+
+module.exports = { EMOJI_TO_ROLES };

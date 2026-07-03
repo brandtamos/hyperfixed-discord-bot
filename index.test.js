@@ -39,6 +39,12 @@ jest.mock('discord.js', () => {
     };
 });
 
+jest.mock('node-persist', () => ({
+    init: jest.fn().mockResolvedValue(undefined),
+    getItem: jest.fn().mockResolvedValue(undefined),
+    setItem: jest.fn().mockResolvedValue(undefined),
+}));
+
 jest.mock('./conversion', () => ({ make: jest.fn() }));
 jest.mock('./bully', () => ({ bullyHasHappened: jest.fn(), getLeaderboard: jest.fn() }));
 jest.mock('./threads', () => ({ add: jest.fn(), remove: jest.fn(), list: jest.fn() }));

@@ -53,6 +53,7 @@ const roletoall = require('./roletoall.js');
 const sentience = require('./sentience.js');
 const bigDogOfTheWeek = require('./bigDogOfTheWeek.js');
 const flightWx = require('./flightwx.js');
+const stats = require('./stats.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
 
@@ -61,15 +62,31 @@ try {
   ( { EMOJI_TO_ROLES } = require('./emojiToRoles.js'));
 } catch (err) {
   if (err.code === 'MODULE_NOT_FOUND') {
-    EMOJI_TO_ROLES = new Map();
     console.log(`No emojiToRoles.js exists, not using emoji to role function.`)
   } else {
     console.log(`Emoji to roles error: ${err}`);
   }
 }
 
+// Always fall back to an empty map so a missing/unloadable emojiToRoles.js
+// (e.g. when required under a test runner) can't crash the whole bot at startup.
+if (!EMOJI_TO_ROLES) {
+  EMOJI_TO_ROLES = new Map();
+}
+
 /** @type {RegExp} Regular expression to match bully commands (e.g., !bully, !wully, !cully) */
 const bullyRegex = /^!\p{L}ully$/u;
+
+/** @type {Set<string>} All built-in commands handled by the switch below, used for usage stats */
+const BUILTIN_COMMANDS = new Set([
+    "!help", "!secretmenu", "!bullyleaderboard", "!time",
+    "!addcommand", "!removecommand", "!addsecretmenucommand", "!removesecretmenucommand",
+    "!addthread", "!removethread", "!threads",
+    "!dryaddrole", "!addrole", "!dryremoverole", "!removerole", "!usersworole",
+    "!botsay", "!botreact",
+    "!pickbigdog", "!setbigdog", "!bigdog",
+    "!metar", "!taf", "!commandstats"
+]);
 
 /** @type {Map<string,string>} Maps words to their joke corrections */
 const wordToCorrectionMap = new Map([
@@ -116,8 +133,14 @@ client.on("messageCreate", async msg => {
 
     commands.checkForCommand(msg, command);
 
+    // track usage of recognized built-in commands
+    if(BUILTIN_COMMANDS.has(command)){
+        stats.recordCommand(command);
+    }
+
     if(isBullyCommand(command)){
         // switch doesn't deal well with wildcard matching so first check for a *ully command
+        stats.recordCommand(command);
         await bully.bullyHasHappened(msg, command);
         return;
     }
@@ -208,6 +231,11 @@ client.on("messageCreate", async msg => {
             break;
         case "!bigdog":
             bigDogOfTheWeek.getCurrentBigDog(msg);
+            break;
+        case "!commandstats":
+            if(userIsMod(msg)){
+                msg.channel.send(stats.formatStats());
+            }
             break;
         case "!metar":
             flightWx.wx("metar", msg);
