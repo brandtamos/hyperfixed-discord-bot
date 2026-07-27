@@ -107,8 +107,9 @@ async function remove(msg) {
 /* Lists all bookmarked threads in the server 
  */
 async function list(msg) {
+  const serverId = msg.guild.id;
+  
   try {
-    const serverId = msg.guild.id;
     const allThreads = threadsManager.getThreads()
       .map(t => `<#${t.threadID} - ${t.description}`)
       .join("\n");
