@@ -132,7 +132,7 @@ async function list(msg) {
 
           const threadName = thread?.isThread() ? thread.name : 404;
 
-          if (thread !== 404) {
+          if (threadName !== 404) {
             return `[${threadName}](https://discord.com/channels/${serverId}/${t.threadID}) - ${t.description}`;
           }
           return `Could not find thread with id:${t.threadID} and description: ${t.description}`
