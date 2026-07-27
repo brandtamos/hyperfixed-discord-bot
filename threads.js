@@ -108,10 +108,36 @@ async function remove(msg) {
  */
 async function list(msg) {
   try {
+    const serverId = msg.guild.id;
     const allThreads = threadsManager.getThreads()
-      .map(t => `<#${t.threadID}> - ${t.description}`)
+      .map(t => `<#${t.threadID} - ${t.description}`)
       .join("\n");
 
+    const allThreads = (
+      await Promise.all(
+        threadsManager.getThreads().map(async (t) => {
+          // get the thread from the stored id 
+          // first try to hit the cache for the thread (faster)
+          let thread = client.channels.cache.get(t.threadID);
+
+          // if the thread is not in the cache, hit the API (slower)
+          if (!thread) {
+            try {
+              thread = await client.channels.fetch(t.threadID);
+            } catch {
+              // Ignore fetch errors
+            }
+          }
+
+          const threadName = thread?.isThread() ? thread.name : 404;
+
+          if (thread !== 404) {
+            return `[${threadName}](https://discord.com/channels/${serverId}/${t.threadID}) - ${t.description}`;
+          }
+          return `Could not find thread with id:${t.threadID} and description: ${t.description}`
+        })
+      )
+    ).join("\n");
    
     if(allThreads != "") {
       let response = "All bookmarked threads on the server:\n";
