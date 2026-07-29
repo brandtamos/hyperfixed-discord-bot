@@ -1,5 +1,7 @@
 const threadsManager = require('./threadsManager');
 
+const MAX_MESSAGE_LENGTH = 2000;
+
 /* adds a new thread into the list for the channel where
  * the command is typed
  *
@@ -133,15 +135,35 @@ async function list(msg) {
         return `Could not find thread with id:${t.threadID} and description: ${t.description}`
       })
     )
-  ).join("\n");
+  );
    
-  if(allThreads != "") {
-    let response = "All bookmarked threads on the server:\n";
-    response += allThreads;
-    msg.channel.send(response);
-  } else {
+  if(!allThreads.length) {
       msg.channel.send("No threads bookmarked on the server.")
-  }    
+  } else {
+    let response = 'All bookmarked threads on the server:\n';
+
+    let i = 0;
+    allThreads.forEach((newLine) => {
+
+      // only add '\n' if this is not hte last element
+      // otherwise the test faild :D
+      i = i + 1;
+      if (i < allThreads.length) {
+        newLine = newLine + '\n'
+      }
+
+      if ((response.length + newLine ) >= MAX_MESSAGE_LENGTH) {
+            msg.channel.send(response);
+            response = '';
+        }
+        response = response + newLine;
+    });
+
+    if (response.length > 0) {
+        msg.channel.send(response);
+    }
+
+  }   
 }
 
 /* checks if channelid belongs to a thread 
