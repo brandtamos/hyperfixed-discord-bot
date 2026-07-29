@@ -17,6 +17,9 @@ describe('threads', () => {
 
         mockMsg = {
             content: '',
+            guild: {
+                id: 'guild-123',
+            },
             channel: {
                 id: 'channel-123',
                 threads: {
@@ -31,7 +34,19 @@ describe('threads', () => {
                     send: jest.fn(),
                 },
                 channels: {
-                    fetch: jest.fn().mockResolvedValue({ isThread: () => true }),
+                    cache: {
+                        get: jest.fn(),
+                    },
+                    fetch: jest.fn().mockImplementation((threadID) => {
+                        const threadNames = {
+                            '123': 'Thread 1',
+                            '456': 'Thread 2',
+                        };
+                        return Promise.resolve({
+                            name: threadNames[threadID] || 'Unknown',
+                            isThread: () => true,
+                        });
+                    }),
                 }
             },
             author: {
@@ -73,8 +88,9 @@ describe('threads', () => {
                     { threadID: '123', description: 'Thread 1' },
                     { threadID: '456', description: 'Thread 2' },
                 ]);
+            mockMsg.client.channels.cache.get.mockReturnValue(null);
             await threads.list(mockMsg);
-            expect(mockMsg.channel.send).toHaveBeenCalledWith('All bookmarked threads on the server:\n<#123> - Thread 1\n<#456> - Thread 2');
+            expect(mockMsg.channel.send).toHaveBeenCalledWith('All bookmarked threads on the server:\n[#Thread 1](https://discord.com/channels/guild-123/123) - Thread 1\n[#Thread 2](https://discord.com/channels/guild-123/456) - Thread 2');
         });
 
         it('should show a message when no threads are bookmarked', async () => {
