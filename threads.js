@@ -107,23 +107,41 @@ async function remove(msg) {
 /* Lists all bookmarked threads in the server 
  */
 async function list(msg) {
-  try {
-    const allThreads = threadsManager.getThreads()
-      .map(t => `<#${t.threadID}> - ${t.description}`)
-      .join("\n");
+  const serverId = msg.guild.id;
 
+  const allThreads = (
+    await Promise.all(
+      threadsManager.getThreads().map(async (t) => {
+        // get the thread from the stored id 
+        // first try to hit the cache for the thread (faster)
+        let thread = msg.client.channels.cache.get(t.threadID);
+
+        // if the thread is not in the cache, hit the API (slower)
+        if (!thread) {
+          try {
+            thread = await msg.client.channels.fetch(t.threadID);
+          } catch {
+            // Ignore fetch errors
+          }
+        }
+
+        const threadName = thread?.isThread() ? thread.name : 404;
+
+        if (threadName !== 404) {
+          return `[#${threadName}](https://discord.com/channels/${serverId}/${t.threadID}) - ${t.description}`;
+        }
+        return `Could not find thread with id:${t.threadID} and description: ${t.description}`
+      })
+    )
+  ).join("\n");
    
-    if(allThreads != "") {
-      let response = "All bookmarked threads on the server:\n";
-      response += allThreads;
-      msg.channel.send(response);
-    } else {
+  if(allThreads != "") {
+    let response = "All bookmarked threads on the server:\n";
+    response += allThreads;
+    msg.channel.send(response);
+  } else {
       msg.channel.send("No threads bookmarked on the server.")
-    }
-    
-  } catch(error) {
-    console.error(error);
-  }
+  }    
 }
 
 /* checks if channelid belongs to a thread 
