@@ -152,7 +152,7 @@ async function list(msg) {
         newLine = newLine + '\n'
       }
 
-      if ((response.length + newLine ) >= MAX_MESSAGE_LENGTH) {
+      if ((response.length + newLine.length) >= MAX_MESSAGE_LENGTH) {
             msg.channel.send(response);
             response = '';
         }
