@@ -54,8 +54,10 @@ const sentience = require('./sentience.js');
 const bigDogOfTheWeek = require('./bigDogOfTheWeek.js');
 const flightWx = require('./flightwx.js');
 const stats = require('./stats.js');
+const modReminders = require('./modReminders.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
+const MOD_ROLE_ID =  process.env.MOD_ROLE_ID;
 
 let EMOJI_TO_ROLES;
 try {
@@ -410,5 +412,22 @@ client.login(process.env.BOT_TOKEN).catch(err => {
 process.on("exit",  () => {
     console.log('destroying bot client');
     client.destroy();
+});
+
+
+
+client.once('ready', async () => {
+  const reminderChannel = await client.channels.fetch(process.env.MODREMINDERS_CHANNEL_ID);
+  const responseChannel = await client.channels.fetch(process.env.MODREMINDER_RESPONSE_CHANNEL_ID);
+  
+  async function loop() {
+    let now = new Date();
+    modReminders.loop(reminderChannel, responseChannel, MOD_ROLE_ID);
+    now = new Date();                  // allow for time passing
+    let delay = 60000 - (now % 60000);     
+    setTimeout(loop, delay);
+  }
+
+  loop();
 });
 
