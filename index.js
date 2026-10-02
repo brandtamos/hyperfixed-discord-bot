@@ -57,7 +57,6 @@ const stats = require('./stats.js');
 const modReminders = require('./modReminders.js');
 
 const REACTION_CHANNEL_ID = process.env.REACTION_CHANNEL_ID;
-const MOD_ROLE_ID =  process.env.MOD_ROLE_ID;
 
 let EMOJI_TO_ROLES;
 try {
@@ -422,7 +421,7 @@ client.once('ready', async () => {
   
   async function loop() {
     let now = new Date();
-    modReminders.loop(reminderChannel, responseChannel, MOD_ROLE_ID);
+    modReminders.loop(reminderChannel, responseChannel);
     now = new Date();                  // allow for time passing
     let delay = 60000 - (now % 60000);     
     setTimeout(loop, delay);
