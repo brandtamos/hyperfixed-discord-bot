@@ -1,6 +1,6 @@
 MAX_MESSAGE_LENGTH = 2000;
 
-async function loop(reminderChannel, responseChannel, modRoleID) {
+async function loop(reminderChannel, responseChannel) {
 
   const messages = await fetchAllMessages(reminderChannel);
 
@@ -44,7 +44,7 @@ async function loop(reminderChannel, responseChannel, modRoleID) {
     });
  
     if (reminders.length) {
-      let response = `Grand timezone <@&${modRoleID}>! Today is ${now.getMonth()+1}/${now.getDate()} (US). You have asked me to remind you of the following:\n`;
+      let response = `Grand timezone perverts! Today is ${now.getMonth()+1}/${now.getDate()} (US). You have asked me to remind you of the following:\n`;
 
       let i = 0;
       reminders.forEach((newLine) => {
